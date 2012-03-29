@@ -1,12 +1,32 @@
-# Created by newuser for 4.3.12
+# aliases
+if [ -f ~/.aliases ]; then
+  source ~/.aliases
+fi
+
+# autoload
+autoload colors && colors
+autoload -U compinit && compinit
+#autoload predict-on && predict-on
+# functions
+ZSH_FUNCTIONS=~/.zsh
+## 読み込まないリスト
+IGNORE_FUNCTIONS='incr-0.2.zsh|example.zsh'
+## source
+if [ -d "$ZSH_FUNCTIONS" ]; then
+  fns=(`find $ZSH_FUNCTIONS -type f -o -type l | egrep -v $IGNORE_FUNCTIONS | tr -s '\n' ' '`)
+  if [ -n "$fns" ]; then
+    for fn in $fns; do
+      source $fn
+    done
+  fi
+fi
 
 # base
-LANG=jp_JP.UTF-8
-EDITOR=vim
+export LANG=ja_JP.UTF-8
+export EDITOR=vim
+export TERM=xterm-256color
 
 # color
-autoload colors
-colors
 local RED=$'%{\e[38;05;196m%}'
 local GREEN=$'%{\e[38;05;46m%}'
 local YELLOW=$'%{\e[38;05;226m%}'
@@ -15,9 +35,8 @@ local DEFAULT=$'%{\e[0;m%}'
 local MAX_RDISPLAY=$((80 + 1))
 PROMPT="${GREEN}%U[%m:%1~]%u${DEFAULT}"
 RPROMPT="${GREEN}%U[%${MAX_RDISPLAY}<...<%/]%u${DEFAULT}"
-precmd() {
-  # terminal title
-  echo -ne "\033]0;${PWD}\007"
+function terminal_title() {
+  print -Pn "\e]2;[%m:%~] %n \a"
 }
 export GREP_COLOR="38;05;46"
 
@@ -59,13 +78,8 @@ zshaddhistory() {
 }
 
 # complete
-# インクリメンタル補完(user script)
-#if [ -d ~/.zsh/plugin ]; then
-#  source ~/.zsh/plugin/incr-0.2.zsh
-#else
-  autoload -U compinit
-  compinit
-#fi
+# パス補完時にスラッシュを削除しない
+setopt noautoremoveslash
 # 補完リストがウィンドウからあふれるときはたずねる
 export LISTMAX=0
 # 補完候補があるときはそれにする。なければ小文字大文字変換する。さらになければ大文字/小文字変換する
@@ -74,31 +88,20 @@ zstyle ':completion:*' matcher-list '' 'm:{a-z}={A-Z}' '+m:{A-Z}={a-z}'
 zstyle ':completion:*:default' menu select=2
 # カレントディレクトリに候補がないときのみcdpathから補完
 zstyle ':completion:*:cd:*' tag-order local-directories path-directories
-# 補完のときに除外するディレクトリの指定(きかないっぽい？？fignoreはきく)
+# 補完のときに除外するディレクトリの指定
 fignore=(.svn .cvs)
-#zstyle ':completion:*:(cd|pushd):*:directories' ignored-patterns '(*/)#(.svn|.cvs)'
 # z.sh
 _Z_CMD=d
-_ZSH=~/.zsh/plugin/rupa-z-ac62d7c/z.sh
-if [ -e "$_ZSH" ]; then
-  source "$_ZSH"
-  precmd() {
+Z_SH="$ZSH_FUNCTIONS/z.sh"
+if [ -e "$Z_SH" ]; then
+  source "$Z_SH"
+  function z_sh() {
     _z --add "$(pwd -P)"
   }
 fi
-# インクリメンタル補完(デフォルト)
-#autoload predict-on
-#predict-on
-# 実験用
-zstyle ':completion:*:cd:*:directories' completer _history _hosts _complete _ignored 
-# きかない
-#zstyle ':completion:*:cd:*:directories' fake 'testest'
-# 色
-#zstyle ':completion:*' list-colors 1
-zstyle ':completion:*' list-prompt %SAt %p: Hit TAB for more, or the character to insert%s
-
 
 # bind
+bindkey -e
 bindkey '^p' history-beginning-search-backward
 bindkey '^n' history-beginning-search-forward
 # インクリメンタルパターンサーチ
@@ -118,36 +121,14 @@ function _kill-backward-blank-word() {
 }
 zle -N _kill-backward-blank-word
 bindkey '^q' _kill-backward-blank-word
-# @todo 前方単語削除をしたい。しかし以下だと^qと同じになる
-#bindkey '^t' backward-kill-line
 
-# その他
-# コマンド実行後は右プロンプトを消す(for コピペ)
+# etc
+# コマンド実行後は右プロンプトを消す
 setopt transient_rprompt
-## 補完方法毎にグループ化する。
-### 補完方法の表示方法
-# @todo 使うか？
-###   %B...%b: 「...」を太字にする。
-###   %d: 補完方法のラベル
-#zstyle ':completion:*' format '%B%d%b'
-#zstyle ':completion:*' group-name ''
-## 補完候補に色を付ける。
-### "": 空文字列はデフォルト値を使うという意味。
-# @todo 使う？
-#zstyle ':completion:*:default' list-colors ""
-## 補完方法の設定。指定した順番に実行する。
-### _oldlist 前回の補完結果を再利用する。
-### _complete: 補完する。
-### _match: globを展開しないで候補の一覧から補完する。
-### _history: ヒストリのコマンドも補完候補とする。
-### _ignored: 補完候補にださないと指定したものも補完候補とする。
-### _approximate: 似ている補完候補も補完候補とする。
-### _prefix: カーソル以降を無視してカーソル位置までで補完する。
-# @todo コマンドによって決めたい。ヒストリでもコマンド＋ファイル名などで検索した結果を表示させたい。
-#zstyle ':completion:*' completer _oldlist _complete _match _history _ignored _approximate _prefix
+# コマンドを訂正
+setopt correct
 
-# alias
-alias l='ls -alptr'
-alias mv='mv -i'
-alias rm='rm -i'
-alias grep='grep --color=auto'
+# 最後にまとめてprecmd
+for f in terminal_title z_sh; do
+  which $f > /dev/null 2>&1 && precmd_functions=($precmd_functions $f)
+done
