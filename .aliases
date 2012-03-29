@@ -1,0 +1,11 @@
+alias l='ls -alptr'
+alias mv='mv -i'
+alias rm='rm -i'
+alias grep='grep --color=auto'
+alias tmux="TERM=screen-256color; $HOME/local/opt/bin/tmux -u"
+alias n='tmux new-window'
+alias pv='tmux split-window -h'
+alias ph='tmux split-window -v'
+alias sp='tmux setw synchronize-pane'
+alias spon='tmux setw synchronize-pane on'
+alias spoff='tmux setw synchronize-pane off'
