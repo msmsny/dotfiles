@@ -1,0 +1,64 @@
+#!/bin/sh
+
+# ペインを均等に分割
+#  @param panes    総分割数
+#  @param vertical 縦分割数 default:1
+#  @todo  select-layoutでアクティブウィンドウを指定する
+#  @todo  入力チェック(引数が数値かどうかの判定, 下限値上限値チェック)
+#  @todo  分割時のメッセージ抑止
+function split_pane_half_vertical_and_tiled() {
+  if [ -z "$1" ]; then
+    return
+  fi
+
+  _TMUX="$HOME/local/opt/bin/tmux"
+  # 縦分割数
+  if [ -z "$2" ]; then
+    vertical_panes=1
+  else
+    vertical_panes="$2"
+  fi
+  # 総分割数
+  panes=`expr "$1" \- "$vertical_panes" \- 1`
+
+  if [ -n "$TMUX" -a -x "$_TMUX" ]; then
+    # 縦分割
+    for i in `seq $vertical_panes`; do
+      $_TMUX -u split-window -h
+    done
+    # 均等に配置
+    $_TMUX -u select-layout even-horizontal
+
+    # 横分割
+    # ひとまず総分割数まで分割する
+    for i in `seq $panes`; do
+      $_TMUX -u split-window -v
+    done
+    # 全体を均等に配置
+    $_TMUX -u select-layout tiled
+  fi
+}
+
+# 最初のペイン以外をkill
+function kill_pane_exclude_one() {
+  _TMUX="$HOME/local/opt/bin/tmux"
+
+  if [ -n "$TMUX" -a -x "$_TMUX" ]; then
+    if [ -n "`uname | grep FreeBSD`" ]; then
+      GNU_XARGS_OPTIONS=
+    else
+      GNU_XARGS_OPTIONS='-r'
+    fi
+    $_TMUX list-panes | awk 'match($1, /^[1-9][0-9]*/) {print substr($1, RSTART, RLENGTH)}' | sort -r | xargs `echo -n $GNU_XARGS_OPTIONS` -n 1 $_TMUX kill-pane -t
+  fi
+}
+
+# エイリアス
+## ペイン均等分割
+function s() {
+  split_pane_half_vertical_and_tiled $*
+}
+## 最初のペイン以外をkill
+function kp() {
+  kill_pane_exclude_one
+}

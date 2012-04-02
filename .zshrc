@@ -3,6 +3,11 @@ if [ -f ~/.aliases ]; then
   source ~/.aliases
 fi
 
+# common functions
+if [ -f ~/.functions ]; then
+  source ~/.functions
+fi
+
 # autoload
 autoload colors && colors
 autoload -U compinit && compinit
