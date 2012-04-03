@@ -1,12 +1,15 @@
 #!/bin/sh
 
+#
 # ペインを均等に分割
-#  @param panes    総分割数
-#  @param vertical 縦分割数 default:1
+#
+#  @param panes    総ペイン数
+#  @param vertical 縦分割数 default:2
 #  @todo  select-layoutでアクティブウィンドウを指定する
 #  @todo  入力チェック(引数が数値かどうかの判定, 下限値上限値チェック)
 #  @todo  分割時のメッセージ抑止
-function split_pane_half_vertical_and_tiled() {
+#
+function split_pane_tiled() {
   if [ -z "$1" ]; then
     return
   fi
@@ -14,28 +17,35 @@ function split_pane_half_vertical_and_tiled() {
   _TMUX="$HOME/local/opt/bin/tmux"
   # 縦分割数
   if [ -z "$2" ]; then
-    vertical_panes=1
+    vertical=1
   else
-    vertical_panes="$2"
+    vertical="$2"
   fi
-  # 総分割数
-  panes=`expr "$1" \- "$vertical_panes" \- 1`
+  # 総ペイン数から横分割数を求める
+  horizontal=`expr "$1" \- "$vertical" \- 1`
 
   if [ -n "$TMUX" -a -x "$_TMUX" ]; then
+    # sequence
+    SEQ='seq'
+    isBSD && SEQ='jot'
+
     # 縦分割
-    for i in `seq $vertical_panes`; do
-      $_TMUX -u split-window -h
+    for i in `$SEQ $vertical`; do
+      $_TMUX split-window -h
     done
     # 均等に配置
-    $_TMUX -u select-layout even-horizontal
+    $_TMUX select-layout even-horizontal
 
     # 横分割
-    # ひとまず総分割数まで分割する
-    for i in `seq $panes`; do
-      $_TMUX -u split-window -v
+    # 総ペイン数になるまで分割する
+    for i in `$SEQ $horizontal`; do
+      $_TMUX split-window -v
     done
     # 全体を均等に配置
-    $_TMUX -u select-layout tiled
+    $_TMUX select-layout tiled
+
+    # 0番目を選択状態にする
+    $_TMUX select-pane -t 0
   fi
 }
 
@@ -53,12 +63,44 @@ function kill_pane_exclude_one() {
   fi
 }
 
+#
+# 1から連番のサーバを指定して各ペインでssh
+#  @param server 連番のサーバ名   ex) hoge*.example.co.jp
+#  @param format 番号フォーマット default:%.2d
+#  @note synchronize-pane onの状態で実行します
+#
+function ssh_each_pane() {
+  _TMUX="$HOME/local/opt/bin/tmux"
+
+  if [ -n "$1" ]; then
+    if [ -n "$TMUX_PANE" ]; then
+      input_pane="`$_TMUX list-panes | awk -v tmux_pane=$TMUX_PANE '$7 == tmux_pane && match($1, /^[0-9]*/) {print substr($1, RSTART, RLENGTH)}'`"
+      num="`expr $input_pane \+ 1`"
+      format="%.2d"
+      test -n "$2" && format="$2"
+      server_num="`printf \"$format\" $num`"
+      hostname="`echo $1 | sed -e \"s/*/$server_num/g\"`"
+      ssh $hostname
+    fi
+  fi
+}
+
+# FreeBSDかどうかを返す
+function isBSD() {
+  uname | grep FreeBSD > /dev/null
+  return $?
+}
+
 # エイリアス
 ## ペイン均等分割
-function s() {
-  split_pane_half_vertical_and_tiled $*
+function splitp() {
+  split_pane_tiled $*
 }
 ## 最初のペイン以外をkill
 function kp() {
   kill_pane_exclude_one
+}
+## 1から連番のサーバを指定して各ペインでssh
+function sshp() {
+  ssh_each_pane $*
 }
