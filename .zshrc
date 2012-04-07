@@ -12,18 +12,11 @@ fi
 autoload colors && colors
 autoload -U compinit && compinit
 #autoload predict-on && predict-on
-# functions
-ZSH_FUNCTIONS=~/.zsh
-## 読み込まないリスト
-IGNORE_FUNCTIONS='incr-0.2.zsh|example.zsh'
-## source
-if [ -d "$ZSH_FUNCTIONS" ]; then
-  fns=(`find $ZSH_FUNCTIONS -type f -o -type l | egrep -v $IGNORE_FUNCTIONS | tr -s '\n' ' '`)
-  if [ -n "$fns" ]; then
-    for fn in $fns; do
-      source $fn
-    done
-  fi
+
+# load local functions
+LOAD_FUNCTIONS=~/.zsh/load.zsh
+if [ -f "$LOAD_FUNCTIONS" ]; then
+  source $LOAD_FUNCTIONS
 fi
 
 # base
@@ -70,19 +63,37 @@ zshaddhistory() {
   local line=${1%%$'\n'}
   local cmd=${line%% *}
   local arg=${line#* }
+
+  # コマンドがないときは保存しない
   if [ -z "$cmd" ]; then
     return 0
   fi
+  # sudoのとき
+  if [ "$cmd" = "sudo" ]; then
+    _arg="`echo $arg | sed -e 's/\s\{1,\}/ /g' | sed -e 's/^\s\{1,\}//'`"
+    cmd=${_arg%% *}
+    arg=${_arg#* }
+    if [ "$cmd" = "-u" ]; then
+      cmd="`echo $arg | cut -f 2 -d ' '`"
+      arg="`echo $arg | cut -f 3 -d ' '`"
+    fi
+  fi
+  # 引数がなしのときの初期化
   if [ "$cmd" = "$arg" ]; then
     arg=
   fi
 
   # rm以外で引数がある or コマンドが3文字以上のとき保存
-  # @todo sudo rmも考慮する
-  [ -n ${#arg} -a ${cmd} != 'rm' -o ${#line} -ge 3 ]
+  [ -n ${#arg} -a "${cmd}" != 'rm' -o ${#line} -ge 3 ]
 }
 
 # complete
+# パス補完の高速化
+zstyle ':completion:*' accept-exact '*(N)'
+if [ -f ~/.zsh/cache ]; then
+  zstyle ':completion:*' use-cache on
+  zstyle ':completion:*' cache-path ~/.zsh/cache
+fi
 # パス補完時にスラッシュを削除しない
 setopt noautoremoveslash
 # 補完リストがウィンドウからあふれるときはたずねる
@@ -93,6 +104,8 @@ zstyle ':completion:*' matcher-list '' 'm:{a-z}={A-Z}' '+m:{A-Z}={a-z}'
 zstyle ':completion:*:default' menu select=2
 # カレントディレクトリに候補がないときのみcdpathから補完
 zstyle ':completion:*:cd:*' tag-order local-directories path-directories
+# プロセスID一覧から補完
+zstyle ':completion:*:processes' command 'ps uxww -o pid,s,args'
 # 補完のときに除外するディレクトリの指定
 fignore=(.svn .cvs)
 # z.sh
