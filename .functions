@@ -3,26 +3,26 @@
 #
 # ペインを均等に分割
 #
-#  @param panes    総ペイン数
-#  @param vertical 縦分割数 default:2
+#  @param panes    総分割数
+#  @param vertical 縦分割数 default:1
 #  @todo  select-layoutでアクティブウィンドウを指定する
 #  @todo  入力チェック(引数が数値かどうかの判定, 下限値上限値チェック)
 #  @todo  分割時のメッセージ抑止
 #
-function split_pane_tiled() {
+function split_pane_half_vertical_and_tiled() {
   if [ -z "$1" ]; then
     return
   fi
 
-  _TMUX="$HOME/local/opt/bin/tmux"
+  _TMUX="/usr/local/bin/tmux"
   # 縦分割数
   if [ -z "$2" ]; then
-    vertical=1
+    vertical_panes=1
   else
-    vertical="$2"
+    vertical_panes="$2"
   fi
-  # 総ペイン数から横分割数を求める
-  horizontal=`expr "$1" \- "$vertical" \- 1`
+  # 総分割数
+  panes=`expr "$1" \- "$vertical_panes" \- 1`
 
   if [ -n "$TMUX" -a -x "$_TMUX" ]; then
     # sequence
@@ -30,28 +30,28 @@ function split_pane_tiled() {
     isBSD && SEQ='jot'
 
     # 縦分割
-    for i in `$SEQ $vertical`; do
-      $_TMUX split-window -h
+    for i in `$SEQ $vertical_panes`; do
+      $_TMUX -u split-window -h
     done
     # 均等に配置
     $_TMUX select-layout even-horizontal
 
     # 横分割
     # 総ペイン数になるまで分割する
-    for i in `$SEQ $horizontal`; do
-      $_TMUX split-window -v
+    for i in `$SEQ $panes`; do
+      $_TMUX -u split-window -v
     done
     # 全体を均等に配置
-    $_TMUX select-layout tiled
+    $_TMUX -u select-layout tiled
 
     # 0番目を選択状態にする
-    $_TMUX select-pane -t 0
+    $_TMUX -u select-pane -t 0
   fi
 }
 
 # 最初のペイン以外をkill
 function kill_pane_exclude_one() {
-  _TMUX="$HOME/local/opt/bin/tmux"
+  _TMUX="/usr/local/bin/tmux"
 
   if [ -n "$TMUX" -a -x "$_TMUX" ]; then
     if [ -n "`uname | grep FreeBSD`" ]; then
@@ -70,7 +70,7 @@ function kill_pane_exclude_one() {
 #  @note synchronize-pane onの状態で実行します
 #
 function ssh_each_pane() {
-  _TMUX="$HOME/local/opt/bin/tmux"
+  _TMUX="/usr/local/bin/tmux"
 
   if [ -n "$1" ]; then
     if [ -n "$TMUX_PANE" ]; then
@@ -85,16 +85,126 @@ function ssh_each_pane() {
   fi
 }
 
+#
+# _z [dirName] -lを表示する。第二引数があるときはそのインデックスに移動する
+#
+# @param string dirName
+# @param int    index
+#
+function dl()
+{
+  if [ -n "$2" ]; then
+    dirs=(`_z "$1" -l 2>&1 | awk '{print $2}'`)
+    test ${#dirs[*]} -lt "$2" && return
+
+    i=1
+    for dir in ${dirs[*]}; do
+      if [ "$i" = "$2" ]; then
+        cd $dir
+        break
+      else
+        i=`expr "$i" + 1`
+      fi
+    done
+  elif [ -n "$1" ]; then
+    _z "$1" -l 2>&1 | awk '{print $2}'
+  fi
+}
+
+#
+# historyファイルのバックアップをとる
+#
+function backupHistory()
+{
+  CP=/bin/cp
+  DIFF=/usr/bin/diff
+  backupDir=$HOME/work/backup/history
+  test -d $backupDir || mkdir -p $backupDir
+
+  for _history in `find -E ~/ -maxdepth 1 -type f -regex '.*\.(.*_history|z)'`; do
+    path="$backupDir/${_history##*/}"
+    # 空ファイルでないかつ差分があるときのみコピー
+    if [ -s "$path" ]; then
+      $DIFF -q $_history $path > /dev/null 2>&1 || $CP $_history $path
+    else
+      $CP $_history $path
+    fi
+  done
+}
+
+#
+# tmuxで使うssh-agent環境変数を引き継ぐ
+#
+function reuseTmuxAgent()
+{
+  _TMUX="/usr/local/bin/tmux"
+  $_TMUX ls > /dev/null 2>&1 && reuseAgent "`$_TMUX show-environment`"
+}
+
+#
+# ssh-agent環境変数を引き継ぐ
+#
+# @param string getEnv default:env
+#
+function reuseAgent()
+{
+  tmpFileName="/tmp/env_${USER}"
+  getEnv=${1:-env}
+
+  envs=(`echo $getEnv | grep -E '^SSH_AUTH_SOCK|^SSH_AGENT_PID'`)
+  if [ $? -eq 0 ]; then
+    for env in $envs; do
+      echo "export `echo $env`" >> $tmpFileName
+    done
+  fi
+
+  # 空ファイルでなければsource
+  test -s $tmpFileName && source $tmpFileName
+  # ファイルがあればremove
+  test -e $tmpFileName && rm -f $tmpFileName
+}
+
+#
+# URLをもとにクエリパラメータを見やすく表示する
+#
+# @use   /usr/bin/php
+# @param string url
+#
+function displayQuery()
+{
+  PHP=/usr/bin/php
+  command="parse_str(parse_url('`echo $1`', PHP_URL_QUERY), \$result); var_dump(\$result);"
+  test -x $PHP && $PHP -r "`echo $command`"
+}
+
+#
+# tailするときにエスケープしないで出力
+#
+# @note  apache2のログをtailするとき用
+# @param options tailのオプション, ファイル名
+#
+function taill()
+{
+  tail $* | while read -r l; do echo -e $l; done
+}
+
 # FreeBSDかどうかを返す
 function isBSD() {
   uname | grep FreeBSD > /dev/null
   return $?
 }
 
+# プロダクション環境か否かの判定
+function isProd()
+{
+  hostname | grep -v 'production.jp' | grep -E '(domain1|domain2)' > /dev/null 2>&1
+  return $?
+}
+
 # エイリアス
 ## ペイン均等分割
 function splitp() {
-  split_pane_tiled $*
+  split_pane_half_vertical_and_tiled $*
 }
 ## 最初のペイン以外をkill
 function kp() {
@@ -103,4 +213,8 @@ function kp() {
 ## 1から連番のサーバを指定して各ペインでssh
 function sshp() {
   ssh_each_pane $*
+}
+## クエリ表示
+function q() {
+  displayQuery $*
 }
