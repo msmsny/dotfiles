@@ -1,9 +1,13 @@
-# init
-ZSH_FUNCTIONS=~/.zsh
-## disable auto-fu highlight, suffix
-AUTO_FU_NOCP=1
-
-# 読み込まないリスト
+# preload
+ZSH_FUNCTIONS="$HOME/.zsh"
+## z.sh
+Z_SH="$ZSH_FUNCTIONS/z.sh"
+_Z_CMD=d
+function z_sh() {
+  _z --add "$(pwd -P)"
+}
+test -f "$Z_SH" -a ! -f ~/.z && touch ~/.z
+## 読み込まないリスト
 IGNORE_FUNCTIONS=
 ZIGNORE="$ZSH_FUNCTIONS/zignore"
 if [ -f "$ZIGNORE" ]; then
@@ -18,40 +22,10 @@ fi
 
 # source
 if [ -d "$ZSH_FUNCTIONS" ]; then
-  fns=(`find $ZSH_FUNCTIONS -type f -o -type l | egrep -v "$0|$ZIGNORE|$IGNORE_FUNCTIONS" | tr -s '\n' ' '`)
+  fns=(`find $ZSH_FUNCTIONS/* -type f -o -type l | egrep -v "$0|$ZIGNORE|$IGNORE_FUNCTIONS" | tr -s '\n' ' '`)
   if [ -n "$fns" ]; then
     for fn in $fns; do
       source $fn
     done
   fi
-fi
-
-# auto-fu init
-function zle-line-init() {
-  auto-fu-init
-}
-if [ -n "`cat $fns | grep 'auto-fu.zsh'`" ]; then
-  zle -N zle-line-init
-  zstyle ':completion:*' completer _oldlist _complete
-  zle -N zle-keymap-select auto-fu-zle-keymap-select
-  zstyle ':auto-fu:var' autoable-function/skipwords "('|$'|\")*" "^((???)##)"
-  # C-cの動作をデフォルトに戻す
-  TRAPINT() {
-    if [[ -o zle ]]; then
-      zle -I
-      case "$LASTWIDGET" in
-        # 補完のタイミングによって先頭にドットがつくので'*'をつける
-        # 入力中, 削除中, 補完完了, 履歴上下
-        *self-insert | *backward-delete-char | *afu+complete-word | *up-line-or-history | *down-line-or-history )
-          zle kill-buffer
-          zle -R '' ;;
-        # isearch中など
-        *zle-keymap-select )
-          zle send-break ;;
-        # その他はsend-breakにしておく
-        * )
-          zle send-break ;;
-      esac
-    fi
-  }
 fi
