@@ -23,9 +23,9 @@ let g:neocomplcache_enable_smart_case = 1
 " 大文字小文字を無視して検索
 let g:neocomplcache_enable_ignore_case = 1
 " 改行/バックスペースで補完候補を閉じる
-inoremap <expr><CR>  pumvisible() ? neocomplcache#smart_close_popup() : "\<CR>"
-inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
-inoremap <expr><BS>  neocomplcache#smart_close_popup()."\<C-h>"
+inoremap <expr><CR>  pumvisible() ? neocomplcache#close_popup() : "\<CR>"
+inoremap <expr><C-h> neocomplcache#close_popup()."\<C-h>"
+inoremap <expr><BS>  neocomplcache#close_popup()."\<C-h>"
 " 補完候補削除
 inoremap <expr><C-c> neocomplcache#cancel_popup()
 " タブで補完候補を選択
@@ -36,6 +36,6 @@ let g:neocomplcache_enable_auto_select = 1
 let g:neocomplcache_disable_auto_complete = 1
 inoremap <expr><TAB>  pumvisible() ? "\<Down>" : "\<C-x>\<C-u>"
 " ポップアップの色設定
-hi Pmenu     ctermbg=8 ctermfg=NONE  guibg=#606060
+hi Pmenu     ctermbg=0 ctermfg=Blue guibg=#606060
 hi PmenuSel  ctermbg=8 ctermfg=Green guibg=#606060
 hi PmenuSbar ctermbg=0 guibg=#d6d6d6
