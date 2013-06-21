@@ -6,7 +6,7 @@ let s:path_vimrc         = s:path_base  . "/vimrc"
 let s:path_general       = s:path_vimrc . "/general.vim"
 let s:path_vundle_dir    = s:path_base  . "/bundle/vundle"
 let s:path_vundle_script = s:path_base  . "/vundles.vim"
-let s:path_plugin_prefix = s:path_base  . "/plugin/settings/"
+let s:path_plugin_prefix = s:path_vimrc . "/plugin/"
 let s:path_plugin_suffix = ".vim"
 
 if filereadable(expand(s:path_general))
