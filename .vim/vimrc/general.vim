@@ -17,6 +17,8 @@ set nobackup
 set directory=$HOME/.vim/backup
 "# ignore bell
 set visualbell t_vb=
+"# <Leader>
+let mapleader = "\<C-i>"
 
 "インデントしない
 set noautoindent

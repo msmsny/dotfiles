@@ -1,0 +1,37 @@
+snippet php_
+abbr [user] php
+    <?php
+    /** @file
+     * ${1:Action}
+     *
+     * @version $Id$
+     */
+
+snippet class_
+abbr [user] class
+    /**
+     * ${1:Action Class}
+     * @par 使い方
+     * @code
+     *  require_once 'hogehoge.php';
+     *  HogeAction::run();
+     * @endcode
+     */
+    class ${2:HogeAction}${3: extends ParentAction}${4: implements ImplementAction}
+    {
+        ${5:TARGET}
+    }
+
+snippet method_
+abbr [user] method
+    /**
+     * ${1:description}
+     *
+     * @param  ${2:format }${3:var }${4:TARGET}
+     * @return ${5:format}${6:TARGET}
+     */
+    ${7:protected}${8: static} function ${9:functionName}(${10})
+    {
+        ${11:TARGET}
+    }
+
