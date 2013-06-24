@@ -1,6 +1,14 @@
 " ========================================
 " " base
 " ========================================
+" autocmdを初期化してから読み込み
+augroup autocmd_vimrc
+  autocmd!
+augroup END
+autocmd autocmd_vimrc FileType * set textwidth=0
+autocmd autocmd_vimrc FileType * set formatoptions-=ro
+autocmd autocmd_vimrc BufWritePost .vimrc,*.vim nested source $HOME/.vimrc
+
 set backspace=2
 set number
 set tabstop=4
@@ -68,3 +76,7 @@ hi LineNr ctermfg=Green ctermbg=NONE cterm=NONE
 "hi CursorLine ctermbg=LightBlue
 "タブを空白に
 set expandtab
+" clipboard
+set clipboard+=unnamed
+" スクリプト再読み込み(手動)
+nnoremap <Leader><C-r> :execute "source " expand("%:p")<CR>
