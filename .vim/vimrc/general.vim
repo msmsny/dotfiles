@@ -52,28 +52,8 @@ set smartcase
 "set whichwrap=b,s,h,l,<,>,[,]
 "検索をファイルの先頭へループしない→いらない
 "set nowrapscan
-"全角スペースの可視化
-highlight ZenkakuSpace cterm=underline ctermfg=lightblue guibg=#666666
-au BufNewFile,BufRead * match ZenkakuSpace /　/
 
 " syntax
-"set term=builtin_linux
-"set ttytype=builtin_linux
-"set t_Co=256
-"検索ハイライト
-hi Search ctermfg=Green ctermbg=NONE cterm=NONE
-hi IncSearch ctermfg=Green ctermbg=NONE cterm=NONE
-"括弧
-hi MatchParen term=standout ctermbg=LightGrey ctermfg=Black guibg=LightGrey guifg=Black
-"モード
-hi ModeMsg ctermfg=Green ctermbg=NONE cterm=NONE
-"エラーメッセージ
-hi ErrorMsg ctermfg=Green ctermbg=NONE cterm=NONE
-"行番号
-hi LineNr ctermfg=Green ctermbg=NONE cterm=NONE
-"カレント行
-"set cursorline
-"hi CursorLine ctermbg=LightBlue
 "タブを空白に
 set expandtab
 " clipboard

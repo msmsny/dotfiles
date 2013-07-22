@@ -12,6 +12,7 @@ Bundle 'Shougo/neocomplcache'
 Bundle 'Shougo/neosnippet'
 Bundle 'Shougo/vimproc'
 Bundle 'Shougo/unite.vim'
+Bundle 'tomasr/molokai'
 " vim-scripts repos
 " non github repos
 
