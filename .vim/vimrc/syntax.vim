@@ -1,34 +1,37 @@
 " ========================================
 " " base
 " ========================================
-let g:molokai_original = 1
-colorscheme molokai
+"# colorscheme
+"## colorschemeがないとおこられるのでプラグイン側(~/.vim/vimrc/plugin以下)で指定する
 syntax on
 
-"全角スペースの可視化
+"# syntax
+"## 全角スペースの可視化
 highlight ZenkakuSpace cterm=underline ctermfg=lightblue guibg=#666666
 au BufNewFile,BufRead * match ZenkakuSpace /　/
-
-" syntax
-"通常(for molokai)
+"## 通常(for molokai)
 hi Normal ctermbg=NONE
-"検索ハイライト
+"## 検索ハイライト
 hi Search ctermfg=black ctermbg=Green cterm=NONE
 hi IncSearch ctermfg=black ctermbg=Green cterm=NONE
-"括弧
+"## 括弧
 hi MatchParen term=standout ctermbg=LightGrey ctermfg=Black guibg=LightGrey guifg=Black
-"モード
+"## モード
 hi ModeMsg ctermfg=Green ctermbg=NONE cterm=NONE
-"エラーメッセージ
+"## エラーメッセージ
 hi ErrorMsg ctermfg=Green ctermbg=NONE cterm=NONE
-"行番号
+"## 行番号
 hi LineNr ctermfg=Green ctermbg=NONE cterm=NONE
-"カレント行
+"## カレント行
 "set cursorline
 "hi CursorLine ctermbg=LightBlue
-"補完選択範囲
+"## snippet補完デフォルト値
 hi Visual ctermfg=black ctermbg=Green cterm=NONE
 hi VisualNOC ctermfg=black ctermbg=Green cterm=NONE
+"## ポップアップメニュー(for neocomplcache)
+hi Pmenu ctermbg=8 ctermfg=NONE guibg=#606060
+hi PmenuSel ctermbg=8 ctermfg=Green guibg=#606060
+hi PmenuSbar ctermbg=0 guibg=#d6d6d6
 
 " ステータスライン
 "hi StatusLine gui=NONE guifg=Black guibg=Green cterm=NONE ctermfg=Black ctermbg=Blue    " アクティブなステータスライン
