@@ -4,6 +4,7 @@
 let s:path_base          = "~/.vim"
 let s:path_vimrc         = s:path_base  . "/vimrc"
 let s:path_general       = s:path_vimrc . "/general.vim"
+let s:path_syntax        = s:path_vimrc . "/syntax.vim"
 let s:path_vundle_dir    = s:path_base  . "/bundle/vundle"
 let s:path_vundle_script = s:path_base  . "/vundles.vim"
 let s:path_plugin_prefix = s:path_vimrc . "/plugin/"
@@ -32,4 +33,11 @@ if isdirectory(expand(s:path_vundle_dir))
       endif
     endfor
   endif
+endif
+
+" ========================================
+" " after
+" ========================================
+if filereadable(expand(s:path_syntax))
+  execute "source " . s:path_syntax
 endif
