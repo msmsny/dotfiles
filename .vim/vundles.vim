@@ -13,6 +13,9 @@ Bundle 'Shougo/neosnippet'
 Bundle 'Shougo/vimproc'
 Bundle 'Shougo/unite.vim'
 Bundle 'tomasr/molokai'
+Bundle 'scrooloose/nerdtree'
+Bundle 'epmatsw/ag.vim'
+Bundle 'taiansu/nerdtree-ag'
 " vim-scripts repos
 " non github repos
 
