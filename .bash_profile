@@ -10,8 +10,13 @@ PATH=/usr/local/bin:/usr/sbin:/usr/bin:/bin:/usr/ccs/bin:/usr/ucb:.
 MANPATH=$MANPATH:/usr/local/man:/usr/man
 EDITOR=vim
 LESSCHARSET=utf-8
-TERM=xterm-256color
-export LANG PATH MANPATH EDITOR LESSCHARSET TERM
+export LANG PATH MANPATH EDITOR LESSCHARSET
+
+## OS依存設定
+if [ "`uname`" = "Darwin" ]; then
+  TERM=xterm-256color
+fi
+export TERM
 
 # run zsh if exists
 ZSH=/bin/zsh
