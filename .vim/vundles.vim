@@ -16,6 +16,8 @@ Bundle 'tomasr/molokai'
 Bundle 'scrooloose/nerdtree'
 Bundle 'epmatsw/ag.vim'
 Bundle 'taiansu/nerdtree-ag'
+Bundle 'tpope/vim-pathogen'
+Bundle 'scrooloose/syntastic'
 " vim-scripts repos
 " non github repos
 
