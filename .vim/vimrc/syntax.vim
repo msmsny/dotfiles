@@ -12,8 +12,8 @@ au BufNewFile,BufRead * match ZenkakuSpace /　/
 "## 通常(for molokai)
 hi Normal ctermbg=NONE
 "## 検索ハイライト
-hi Search ctermfg=black ctermbg=Green cterm=NONE
-hi IncSearch ctermfg=black ctermbg=Green cterm=NONE
+hi Search ctermfg=black ctermbg=Green cterm=reverse,underline
+hi IncSearch ctermfg=black ctermbg=Green cterm=reverse,underline
 "## 括弧
 hi MatchParen term=standout ctermbg=LightGrey ctermfg=Black guibg=LightGrey guifg=Black
 "## モード
