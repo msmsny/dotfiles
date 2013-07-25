@@ -3,6 +3,7 @@ alias l='ls -alptr -G $*'
 alias mv='mv -i'
 alias rm='rm -i'
 alias grep='grep --color=auto'
+alias ag='ag --color-match "38;05;46" $*'
 alias svn='LC_CTYPE=ja_JP.UTF-8 svn'
 alias chbr="sh=$HOME/git/scripts/change_branches.sh; test -f $sh && sudo $sh"
 # 踏み台サーバ用(未設定)
