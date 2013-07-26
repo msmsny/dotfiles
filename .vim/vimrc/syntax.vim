@@ -13,7 +13,8 @@ au BufNewFile,BufRead * match ZenkakuSpace /　/
 hi Normal ctermbg=NONE
 "## 検索ハイライト
 hi Search ctermfg=black ctermbg=Green cterm=reverse,underline
-hi IncSearch ctermfg=black ctermbg=Green cterm=reverse,underline
+"## インクリメンタルサーチ, 置換
+hi IncSearch ctermfg=NONE ctermbg=NONE cterm=reverse
 "## 括弧
 hi MatchParen term=standout ctermbg=LightGrey ctermfg=Black guibg=LightGrey guifg=Black
 "## モード
