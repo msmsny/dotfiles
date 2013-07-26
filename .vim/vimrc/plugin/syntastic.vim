@@ -7,10 +7,22 @@ let g:syntastic_enable_signs = 1
 "# エラーがなければウィンドウを閉じる
 let g:syntastic_auto_loc_list = 2
 "# php, javascriptのファイルは保存時にチェック
-let g:syntastic_mode_map = { 'mode': 'active',
-  \ 'active_filetypes': ['php', 'javascript', 'json'],
-  \ 'passive_filetypes': [] }
+"## active_filetypes  : passive modeのときにチェックするファイルタイプ
+"## passive_filetypes : active modeのときにチェックしないファイルタイプ
+let g:syntastic_mode_map = { 'mode': 'passive',
+  \ 'active_filetypes'  : ['php', 'javascript'],
+  \ 'passive_filetypes' : [] }
 "# phpの構文チェックのみ(phpcs, phpmdは使わない)
 let g:syntastic_php_checkers = ['php']
 "# jshintの構文チェック
-let g:syntastic_javascript_checker = 'jshint'
+"## @note jshintをインストールしないと何もおこらない
+let g:syntastic_javascript_checkers = ['jshint']
+"# ".html"の構文チェック
+"## @todo ".html"はphpとjshintのチェック両方やりたい
+let g:syntastic_filetype_map = { 'html' : 'javascript' }
+"# wq保存時にチェックしない
+"## @note しかしこの設定値は機能していないっぽい..
+let g:syntastic_check_on_wq = 0
+"# map
+cnoremap <silent> ww<CR>  :w<CR>:SyntasticCheck<CR>
+cnoremap <silent> wwq<CR> :w<CR>:SyntasticCheck<CR>:q<CR>
