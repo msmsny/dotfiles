@@ -28,8 +28,6 @@ set visualbell t_vb=
 "# <Leader>
 let mapleader = "\<C-i>"
 
-"インデントしない
-set noautoindent
 "ファイル保存ダイアログの初期ディレクトリをバッファファイル位置に設定
 set browsedir=buffer 
 "クリップボードをWindowsと連携
@@ -41,9 +39,9 @@ set hidden
 "インクリメンタルサーチを行う
 set incsearch
 "タブ文字、行末など不可視文字を表示する
+"タブ文字の可視化
 set list
-"listで表示される文字のフォーマットを指定する
-set listchars=eol:$,tab:>\ ,extends:<
+set listchars=tab:>\ 
 "検索時に大文字を含んでいたら大/小を区別
 set smartcase
 "新しい行を作ったときに高度な自動インデントを行う→いらない

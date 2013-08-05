@@ -7,8 +7,12 @@ syntax on
 
 "# syntax
 "## 全角スペースの可視化
-highlight ZenkakuSpace cterm=underline ctermfg=lightblue guibg=#666666
+hi ZenkakuSpace cterm=bold ctermbg=161 gui=bold guibg=#F92672
 au BufNewFile,BufRead * match ZenkakuSpace /　/
+"## 行末スペースの可視化
+hi HighlightTrailingSpaces cterm=bold ctermbg=161 gui=bold guibg=#F92672
+au BufWinEnter * let w:ml = matchadd('HighlightTrailingSpaces', '\s\+$')
+au WinEnter    * let w:ml = matchadd('HighlightTrailingSpaces', '\s\+$')
 "## 通常(for molokai)
 hi Normal ctermbg=NONE
 "## 検索ハイライト
