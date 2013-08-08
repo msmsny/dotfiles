@@ -12,7 +12,7 @@ let s:path_vundle_dir     = s:path_base  . "/bundle/vundle"
 let s:path_vundle_script  = s:path_base  . "/vundles.vim"
 let s:path_plugin_prefix  = s:path_vimrc . "/plugin/"
 let s:path_plugin_suffix  = ".vim"
-let s:os                  = system('uname')
+let g:os                  = get(g:, 'os', system('uname'))
 
 if filereadable(expand(s:path_general))
   execute "source " . s:path_general
@@ -43,15 +43,15 @@ endif
 " " after
 " ========================================
 " syntaxはプラグインを読み込んだ後にoverwrite
-if (s:os == "Darwin\n")
+if (g:os == "Darwin\n")
   if filereadable(expand(s:path_syntax_darwin))
     execute "source " . s:path_syntax_darwin
   endif
-elseif (s:os == "Linux\n")
+elseif (g:os == "Linux\n")
   if filereadable(expand(s:path_syntax_rhel))
     execute "source " . s:path_syntax_rhel
   endif
-elseif (s:os == "FreeBSD\n")
+elseif (g:os == "FreeBSD\n")
   if filereadable(expand(s:path_syntax_freebsd))
     execute "source " . s:path_syntax_freebsd
   endif

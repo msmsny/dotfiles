@@ -7,11 +7,12 @@ let g:NERDTreeShowHidden=1
 let g:NERDTreeMouseMode=2
 "# 矢印の形式
 "## mac以外だと正しく表示されないようなので+/-表示にする
-if system('uname') != "Darwin\n"
+if g:os != "Darwin\n"
   let g:NERDTreeDirArrows=0
 endif
 "# 引数なしでvim起動時にNERDTreeを起動する
-autocmd vimenter * if !argc() | NERDTree | endif
+"  ただし"vim -R -"では起動しない
+autocmd vimenter * if !argc() && &ro == 0 | NERDTree | endif
 "# バッファがなくなったらNERDTreeも閉じる
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 "# map
