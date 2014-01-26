@@ -58,3 +58,6 @@ set expandtab
 set clipboard+=unnamed
 " スクリプト再読み込み(手動)
 nnoremap <Leader><C-r> :execute "source " expand("%:p")<CR>
+
+"# path
+let $PATH = "/usr/local/bin:" . $PATH
