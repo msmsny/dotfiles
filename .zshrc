@@ -16,6 +16,7 @@ fi
 autoload colors && colors
 autoload -U compinit && compinit
 autoload -Uz vcs_info
+autoload -Uz zmv
 
 # load local functions
 LOAD_FUNCTIONS=~/.zsh/load.zsh
