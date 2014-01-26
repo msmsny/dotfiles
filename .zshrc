@@ -32,6 +32,8 @@ setopt correct
 setopt no_flow_control
 # コマンド実行後は右プロンプトを消す
 setopt transient_rprompt
+# beepを鳴らさない
+setopt no_beep
 
 # 最後にまとめてprecmd
 for f in precmd_vcs_info terminal_title z_sh; do
