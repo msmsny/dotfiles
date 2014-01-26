@@ -25,4 +25,4 @@ zstyle ':vcs_info:svn:*' branchformat '%b:r%r'
 # svn
 # branchesごとcheckoutしたときは以下(%Sは"branches"以下のパス)
 # リビジョンは表示しない(リビジョンが固定になるので)
-zstyle ':vcs_info:*:*:branches' formats '%S:'
+zstyle ':vcs_info:svn:*:branches' formats '%S:'
