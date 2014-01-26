@@ -201,6 +201,22 @@ function isProd()
   return $?
 }
 
+#
+# gitのブランチ名を取得する
+#
+# @param string $repositoryName レポジトリ名
+#
+function br()
+{
+  default='dotfiles'
+  if [ -n "$1" ]; then
+    gitDir=~/git/$1
+  else
+    gitDir=~/git/$default
+  fi
+  (cd "$gitDir" > /dev/null 2>&1 && git branch -a)
+}
+
 # エイリアス
 ## ペイン均等分割
 function splitp() {
