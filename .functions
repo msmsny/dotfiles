@@ -218,3 +218,99 @@ function sshp() {
 function q() {
   displayQuery $*
 }
+
+#
+# memcacheコマンドラインベース
+#
+# @param string $command 実行するコマンド
+# @param string $host    memcacheサーバホスト
+# @param string $port    memcacheサーバポート
+#
+function mcbase()
+{
+  command=$1
+  host=${2:-localhost}
+  port=${3:-11211}
+  echo $command | nc $host $port
+}
+
+#
+# memcache設定取得
+#
+# @param string $host memcacheサーバホスト名
+# @param string $port memcacheサーバポート
+#
+function mcsetting()
+{
+  mcbase 'stats settings' $*
+}
+
+#
+# memcache統計情報取得
+#
+# @param string $host memcacheサーバホスト名
+# @param string $port memcacheサーバポート
+#
+function mcstats()
+{
+  mcbase 'stats' $*
+}
+
+#
+# memcacheキー指定でキャッシュクリア
+#
+# @param string $key キャッシュキー
+# @param string $host memcacheサーバホスト名
+# @param string $port memcacheサーバポート
+#
+function mcdelete()
+{
+  mcbase "delete $1" $2 $3
+}
+
+#
+# memcacheキャッシュをすべてクリア
+#
+# @param string $host memcacheサーバホスト名
+# @param string $port memcacheサーバポート
+#
+function mcflush()
+{
+  mcbase 'flush_all' $*
+}
+
+#
+# memcacheキャッシュサイズ取得
+#
+# @param string $host memcacheサーバホスト名
+# @param string $port memcacheサーバポート
+#
+function mcsize()
+{
+  mcbase 'stats sizes' $*
+}
+
+#
+# memcacheキャッシュキー取得
+#
+# @param string $host memcacheサーバホスト名
+# @param string $port memcacheサーバポート
+#
+function mckeys()
+{
+  for id in `mcbase 'stats slabs' $* | awk '/:/ {print $2}' | cut -f 1 -d ':' | uniq`; do
+    mcbase "stats cachedump ${id} 0" $* | grep -v -E '^END';
+  done
+}
+
+#
+# memcacheキャッシュ値取得
+#
+# @param string $key キャッシュキー
+# @param string $host memcacheサーバホスト名
+# @param string $port memcacheサーバポート
+#
+function mcvalue()
+{
+  mcbase "get $1" $2 $3 | grep -v -E '^END'
+}
