@@ -5,3 +5,17 @@
 	ui = auto
 [core]
 	editor = /usr/bin/vim
+[merge]
+	ff = false
+[pager]
+	log = /Users/msmsny/git/scripts/diff-highlight | less
+	show = /Users/msmsny/git/scripts/diff-highlight | less
+	diff = /Users/msmsny/git/scripts/diff-highlight | less
+[pull]
+	rebase = true
+[alias]
+	br = branch
+	co = checkout
+	ann = annotate
+	remove = rm
+	move = mv
