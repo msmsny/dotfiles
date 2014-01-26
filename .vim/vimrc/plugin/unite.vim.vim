@@ -29,7 +29,8 @@ let g:unite_source_file_mru_filename_format = ''
 
 " ヤンク履歴
 let g:unite_source_history_yank_enable =1
-nnoremap <silent> <Leader><C-h> :Unite history/yank<CR>
+"" 末尾スペースを可視化させないためにnoautocmd
+nnoremap <silent> <Leader>h :noautocmd Unite history/yank<CR>
 
 " ショートカットメニュー
 let g:unite_source_menu_menus = {
