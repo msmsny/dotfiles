@@ -313,7 +313,7 @@ function! s:taglist_filter(input)
     endif
 
     let taglist = map(taglist('^'.a:input.'$'), "{
-    \   'word':    v:val.name,
+    \   'word':    '@'.fnamemodify(v:val.filename, ':.').matchstr(v:val.cmd, '^[?/]\\^\\?\\zs.\\{-1,}\\ze\\$\\?[?/]$'),
     \   'abbr':    printf('%s  %s',
     \                  s:truncate('@'.fnamemodify(
     \                     v:val.filename, ':.'),
