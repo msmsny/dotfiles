@@ -5,3 +5,10 @@
 set autoindent
 "# htmlはインデントがおかしくなるのですでに設定されているインデントは無効にする
 autocmd FileType html set indentexpr&
+
+"# yank履歴の保存設定
+"## '100 : 100ファイルまで履歴を記憶する
+"## <50  : 各50行まで登録する
+"## s10  : viminfoファイルの上限サイズ(KB)
+"## h    : hlsearchのハイライトが再現されない
+set viminfo='100,<100000,s100000,h
