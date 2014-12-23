@@ -32,6 +32,8 @@ let g:unite_source_tag_max_name_length =
     \ get(g:, 'unite_source_tag_max_name_length', 25)
 let g:unite_source_tag_max_fname_length =
     \ get(g:, 'unite_source_tag_max_fname_length', 20)
+let g:unite_source_tag_max_location_length =
+    \ get(g:, 'unite_source_tag_max_location_length', 50)
 
 " When enabled, use multi-byte aware string truncate method
 let g:unite_source_tag_strict_truncate_string =
@@ -310,16 +312,15 @@ function! s:taglist_filter(input)
         return s:input_cache[key]
     endif
 
-    let taglist = map(taglist(a:input), "{
+    let taglist = map(taglist('^'.a:input.'$'), "{
     \   'word':    v:val.name,
-    \   'abbr':    printf('%s  %s  %s',
-    \                  s:truncate(v:val.name,
-    \                     g:unite_source_tag_max_name_length, 15, '..'),
+    \   'abbr':    printf('%s  %s',
     \                  s:truncate('@'.fnamemodify(
     \                     v:val.filename, ':.'),
     \                     g:unite_source_tag_max_fname_length, 10, '..'),
-    \                  'pat:' .  matchstr(v:val.cmd,
-    \                         '^[?/]\\^\\?\\zs.\\{-1,}\\ze\\$\\?[?/]$')
+    \                  s:truncate('pat:' .  matchstr(v:val.cmd,
+    \                         '^[?/]\\^\\?\\zs.\\{-1,}\\ze\\$\\?[?/]$'),
+    \                      g:unite_source_tag_max_location_length, 10, '..')
     \                  ),
     \   'kind':    'jump_list',
     \   'action__path':    unite#util#substitute_path_separator(
