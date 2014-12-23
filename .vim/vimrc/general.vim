@@ -12,6 +12,7 @@ autocmd autocmd_vimrc BufWritePost .vimrc,*.vim nested source $HOME/.vimrc
 set backspace=2
 set number
 set tabstop=4
+set shiftwidth=4
 set showmatch
 set encoding=utf-8
 set fileencoding=utf-8
