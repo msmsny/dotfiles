@@ -309,6 +309,15 @@ let s:indent    = ''
 " The name of the property
 let s:varname   = ''
 
+" Type of property
+let s:type      = ''
+
+" Default type of property
+let s:defaultType = 'string'
+
+" Type hinting of property
+let s:typeHinting = ''
+
 " The function name of the property (capitalized varname)
 let s:funcname  = ''
 
@@ -322,6 +331,7 @@ let s:lastline  = 0
 let s:phpname = '[a-zA-Z_$][a-zA-Z0-9_$]*'
 let s:brackets = '\(\s*\(\[\s*\]\)\)\='
 let s:variable = '\(\s*\)\(\([private,protected,public]\s\+\)*\)\$\(' . s:phpname . '\)\s*\(;\|=[^;]\+;\)'
+let s:atvar    = '\(\s*\)@var\s\+\([a-zA-Z0-9\\\[\]]*\)'
 
 " The main entry point. This function saves the current position of the
 " cursor without the use of a mark (see note below)  Then the selected
@@ -468,8 +478,8 @@ endif
 "
 if !exists("*s:ProcessRegion")
   function s:ProcessRegion(region)
-    let startPosition = match(a:region, s:variable, 0)
-    let endPosition = matchend(a:region, s:variable, 0)
+    let startPosition = match(a:region, s:variable . '\|' . s:atvar, 0)
+    let endPosition = matchend(a:region, s:variable . '\|' . s:atvar, 0)
 
     while startPosition != -1
       let result = strpart(a:region, startPosition, endPosition - startPosition)
@@ -477,8 +487,8 @@ if !exists("*s:ProcessRegion")
       "call s:DebugParsing(result)
       call s:ProcessVariable(result)
 
-      let startPosition = match(a:region, s:variable, endPosition)
-      let endPosition = matchend(a:region, s:variable, endPosition)
+      let startPosition = match(a:region, s:variable . '\|' . s:atvar, endPosition)
+      let endPosition = matchend(a:region, s:variable . '\|' . s:atvar, endPosition)
     endwhile
 
   endfunction
@@ -499,6 +509,10 @@ endif
 "
 if !exists("*s:ProcessVariable")
   function s:ProcessVariable(variable)
+    if (!match(a:variable, s:atvar, 0))
+        let s:type = substitute(substitute(a:variable, s:atvar, '\2', ''), '\\', '\\\\', 'g')
+        return
+    endif
     let s:indent    = substitute(a:variable, s:variable, '\1', '')
     let s:varname   = substitute(a:variable, s:variable, '\4', '')
     let s:funcname  = toupper(s:varname[0]) . strpart(s:varname, 1)
@@ -517,6 +531,8 @@ if !exists("*s:ProcessVariable")
     if s:setter
       call s:InsertSetter()
     endif
+
+    let s:type = ''
 
   endfunction
 endif
@@ -538,6 +554,16 @@ if !exists("*s:InsertGetter")
 
     let method = substitute(method, '%varname%', s:varname, 'g')
     let method = substitute(method, '%funcname%', 'get' . s:funcname, 'g')
+    if s:type == ''
+        let method = substitute(method, '%type%', s:defaultType, 'g')
+        let method = substitute(method, '%typeHinting%', '', 'g')
+    elseif s:type == 'string' || s:type == 'int' || s:type == 'float' || s:type == 'mixed'
+        let method = substitute(method, '%type%', s:type, 'g')
+        let method = substitute(method, '%typeHinting%', '', 'g')
+    else
+        let method = substitute(method, '%type%', s:type, 'g')
+        let method = substitute(method, '%typeHinting%', s:type . ' ', 'g')
+    endif
 
     call s:InsertMethodBody(method)
 
@@ -553,6 +579,16 @@ if !exists("*s:InsertSetter")
 
     let method = substitute(method, '%varname%', s:varname, 'g')
     let method = substitute(method, '%funcname%', 'set' . s:funcname, 'g')
+    if s:type == ''
+        let method = substitute(method, '%type%', s:defaultType, 'g')
+        let method = substitute(method, '%typeHinting%', '', 'g')
+    elseif s:type == 'string' || s:type == 'int' || s:type == 'float' || s:type == 'mixed'
+        let method = substitute(method, '%type%', s:type, 'g')
+        let method = substitute(method, '%typeHinting%', '', 'g')
+    else
+        let method = substitute(method, '%type%', s:type, 'g')
+        let method = substitute(method, '%typeHinting%', s:type . ' ', 'g')
+    endif
 
     call s:InsertMethodBody(method)
 
