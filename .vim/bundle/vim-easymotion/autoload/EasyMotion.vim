@@ -364,7 +364,7 @@ endfunction " }}}
 " Helper Functions: {{{
 " -- Message -----------------------------
 function! s:Message(message) " {{{
-    echo 'EasyMotion: ' . a:message
+"    echo 'EasyMotion: ' . a:message
 endfunction " }}}
 function! s:Prompt(message) " {{{
     echohl Question
