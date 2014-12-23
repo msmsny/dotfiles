@@ -43,6 +43,8 @@ hi VisualNOC ctermfg=black ctermbg=Green cterm=NONE
 hi Pmenu ctermbg=8 ctermfg=NONE guibg=#606060
 hi PmenuSel ctermbg=8 ctermfg=Green guibg=#606060
 hi PmenuSbar ctermbg=0 guibg=#d6d6d6
+"## easymotion
+hi EasyMotionTarget cterm=bold ctermfg=46 ctermbg=NONE
 
 " ステータスライン
 "hi StatusLine gui=NONE guifg=Black guibg=Green cterm=NONE ctermfg=Black ctermbg=Blue    " アクティブなステータスライン
