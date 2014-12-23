@@ -29,10 +29,12 @@ Bundle 'Lokaltog/vim-easymotion'
 Bundle 'thinca/vim-prettyprint'
 Bundle 'tyru/caw.vim'
 Bundle 'h1mesuke/vim-alignta'
-Bundle 'm2mdas/phpcomplete-extended'
-Bundle 'm2mdas/phpcomplete-extended-symfony'
-Bundle 'docteurklein/php-getter-setter.vim'
-Bundle 'stephpy/vim-php-cs-fixer'
+if executable('php')
+  Bundle 'm2mdas/phpcomplete-extended'
+  Bundle 'm2mdas/phpcomplete-extended-symfony'
+  Bundle 'docteurklein/php-getter-setter.vim'
+  Bundle 'stephpy/vim-php-cs-fixer'
+endif
 " vim-scripts repos
 " non github repos
 
