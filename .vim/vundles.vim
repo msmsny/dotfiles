@@ -24,6 +24,7 @@ Bundle 'scrooloose/syntastic'
 Bundle 'kana/vim-submode'
 Bundle 'm2mdas/phpcomplete-extended'
 Bundle 'm2mdas/phpcomplete-extended-symfony'
+Bundle 'docteurklein/php-getter-setter.vim'
 " vim-scripts repos
 " non github repos
 
