@@ -61,3 +61,7 @@ nnoremap <Leader><C-r> :execute "source " expand("%:p")<CR>
 
 "# path
 let $PATH = "/usr/local/bin:" . $PATH
+
+"# tags
+nnoremap <silent> <S-Left>  :bp<CR>
+nnoremap <silent> <S-Right> :bn<CR>
