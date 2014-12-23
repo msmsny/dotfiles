@@ -25,6 +25,7 @@ Bundle 'kana/vim-submode'
 Bundle 'm2mdas/phpcomplete-extended'
 Bundle 'm2mdas/phpcomplete-extended-symfony'
 Bundle 'docteurklein/php-getter-setter.vim'
+Bundle 'stephpy/vim-php-cs-fixer'
 " vim-scripts repos
 " non github repos
 
