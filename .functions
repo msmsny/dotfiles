@@ -149,7 +149,7 @@ function reuseTmuxAgent()
 function reuseAgent()
 {
   tmpFileName="/tmp/env_${USER}"
-  getEnv=${1:-env}
+  getEnv=${1:-"`env`"}
 
   envs=(`echo $getEnv | grep -E '^SSH_AUTH_SOCK|^SSH_AGENT_PID'`)
   if [ $? -eq 0 ]; then
