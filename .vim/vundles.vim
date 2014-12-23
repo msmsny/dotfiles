@@ -21,6 +21,8 @@ Bundle 'epmatsw/ag.vim'
 Bundle 'taiansu/nerdtree-ag'
 Bundle 'tpope/vim-pathogen'
 Bundle 'scrooloose/syntastic'
+Bundle 'm2mdas/phpcomplete-extended'
+Bundle 'm2mdas/phpcomplete-extended-symfony'
 " vim-scripts repos
 " non github repos
 
