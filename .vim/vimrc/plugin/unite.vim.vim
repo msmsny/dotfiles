@@ -23,6 +23,11 @@ au FileType unite nnoremap <silent> <buffer> <ESC><ESC> :q<CR>
 au FileType unite nnoremap <silent> <buffer> <C-c>      :q<CR>
 au FileType unite inoremap <silent> <buffer> <ESC><ESC> <ESC>:q<CR>
 au FileType unite inoremap <silent> <buffer> <C-c>      <ESC>:q<CR>
+" バッファの末尾スペースを可視化しない
+autocmd FileType unite call s:unite_settings()
+function! s:unite_settings()
+  au BufWinEnter * match TrailingSpaces //
+endfunction
 
 " file_mruを速く
 let g:unite_source_file_mru_filename_format = ''

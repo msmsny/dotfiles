@@ -11,12 +11,18 @@ colorscheme darkblue
 
 "# syntax
 "## 全角スペースの可視化
-hi ZenkakuSpace cterm=bold ctermbg=161 gui=bold guibg=#F92672
-au BufNewFile,BufRead * match ZenkakuSpace /　/
+"## @todo 背景色が設定されない(あとに設定したものが反映されてしまう)のでなおす
+augroup HighlightDoubleByteSpace
+  autocmd!
+  autocmd VimEnter,WinEnter,ColorScheme * highlight DoubleByteSpace cterm=bold ctermbg=161 gui=bold guibg=#F92672
+  autocmd VimEnter,WinEnter * match DoubleByteSpace /　/
+augroup END
 "## 行末スペースの可視化
-hi HighlightTrailingSpaces cterm=bold ctermbg=161 gui=bold guibg=#F92672
-au BufWinEnter * let w:ml = matchadd('HighlightTrailingSpaces', '\s\+$')
-au WinEnter    * let w:ml = matchadd('HighlightTrailingSpaces', '\s\+$')
+augroup HighlightTrailingSpaces
+  autocmd!
+  autocmd VimEnter,WinEnter,ColorScheme * highlight TrailingSpaces cterm=bold ctermbg=161 gui=bold guibg=#F92672
+  autocmd VimEnter,WinEnter * match TrailingSpaces /\s\+$/
+augroup END
 "## 通常(for molokai)
 hi Normal ctermbg=NONE
 "## 検索ハイライト
