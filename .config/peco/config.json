@@ -1,0 +1,17 @@
+{
+    "Keymap": {
+        "C-f"        : "peco.SelectPreviousPage",
+        "C-b"        : "peco.SelectNextPage",
+        "ArrowRight" : "peco.ForwardChar",
+        "ArrowLight" : "peco.BackwardChar",
+        "C-c"        : "peco.Cancel"
+    },
+    "Style": {
+        "Basic"          : ["on_default", "default"],
+        "SavedSelection" : ["bold"      , "on_green", "black"],
+        "Selected"       : ["underline" , "on_blue" , "white"],
+        "Query"          : ["green"     , "bold"],
+        "Matched"        : ["green"     , "on_default"]
+    },
+    "Prompt": ">"
+}
