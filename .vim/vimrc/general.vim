@@ -25,6 +25,10 @@ set nobackup
 set directory=$HOME/.vim/backup
 "# ignore bell
 set visualbell t_vb=
+"# map
+" カーソル位置移動, mapleaderの前に定義しておく
+nnoremap <silent> <S-Up>   <C-o>
+nnoremap <silent> <S-Down> <C-i>
 "# <Leader>
 let mapleader = "\<C-i>"
 
