@@ -14,7 +14,6 @@ function split_pane_half_vertical_and_tiled() {
     return
   fi
 
-  _TMUX="/usr/local/bin/tmux"
   # 縦分割数
   if [ -z "$2" ]; then
     vertical_panes=1
@@ -51,8 +50,6 @@ function split_pane_half_vertical_and_tiled() {
 
 # 最初のペイン以外をkill
 function kill_pane_exclude_one() {
-  _TMUX="/usr/local/bin/tmux"
-
   if [ -n "$TMUX" -a -x "$_TMUX" ]; then
     if [ -n "`uname | grep FreeBSD`" ]; then
       GNU_XARGS_OPTIONS=
@@ -70,8 +67,6 @@ function kill_pane_exclude_one() {
 #  @note synchronize-pane onの状態で実行します
 #
 function ssh_each_pane() {
-  _TMUX="/usr/local/bin/tmux"
-
   if [ -n "$1" ]; then
     if [ -n "$TMUX_PANE" ]; then
       input_pane="`$_TMUX list-panes | awk -v tmux_pane=$TMUX_PANE '$7 == tmux_pane && match($1, /^[0-9]*/) {print substr($1, RSTART, RLENGTH)}'`"
@@ -137,7 +132,6 @@ function backupHistory()
 #
 function reuseTmuxAgent()
 {
-  _TMUX="/usr/local/bin/tmux"
   $_TMUX ls > /dev/null 2>&1 && reuseAgent "`$_TMUX show-environment`"
 }
 

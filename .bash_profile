@@ -18,6 +18,9 @@ if [ "`uname`" = "Darwin" ]; then
 fi
 export TERM
 
+## tmux
+_TMUX=/usr/local/bin/tmux
+
 # run zsh if exists
 ZSH=/bin/zsh
 if [ -x "$ZSH" ]; then

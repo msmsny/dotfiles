@@ -10,6 +10,7 @@ alias chbr="sh=$HOME/git/scripts/change_branches.sh; test -f $sh && sudo $sh"
 hostname | grep -E 'hostname1.jp|hostname2.jp' > /dev/null 2>&1 && alias a='eval `ssh-agent`; eval `ssh-add`'
 
 # tmux
+alias tmux="$_TMUX -u"
 alias n='tmux new-window'
 alias pv='tmux split-window -h'
 alias ph='tmux split-window -v'
