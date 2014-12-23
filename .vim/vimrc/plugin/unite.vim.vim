@@ -42,11 +42,18 @@ let g:unite_source_menu_menus = {
 \ "shortcut" : {
 \   "description" : "shortcut menu:",
 \   "command_candidates" : [
-\     ["file_mru"     , "Unite file_mru"],
-\     ["file"         , "Unite -buffer-name=file file"],
-\     ["buffer"       , "Unite buffer"],
-\     ["withBufferDir", "UniteWithBufferDir -buffer-name=file file"],
-\     ["register"     , "Unite -buffer-name=register register"],
+\     ["phpcomplete/files"         , "Unite phpcomplete/files"],
+\     ["symfony/services"          , "Unite symfony/services"],
+\     ["symfony/tags"              , "Unite symfony/tags"],
+\     ["symfony/bundles"           , "Unite symfony/bundles"],
+\     ["symfony/entities"          , "Unite symfony/entities"],
+\     ["symfony/routes_by_name"    , "Unite symfony/routes_by_name"],
+\     ["symfony/routes_by_pattern" , "Unite symfony/routes_by_pattern"],
+\     ["file_mru"                  , "Unite file_mru"],
+\     ["file"                      , "Unite -buffer-name=file file"],
+\     ["buffer"                    , "Unite buffer"],
+\     ["withBufferDir"             , "UniteWithBufferDir -buffer-name=file file"],
+\     ["register"                  , "Unite -buffer-name=register register"],
 \   ],
 \ },
 \}
