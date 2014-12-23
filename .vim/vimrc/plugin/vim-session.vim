@@ -10,4 +10,4 @@ let g:session_autosave = 'no'
 
 " map
 cnoremap qq<CR> :SaveSession!<CR>:q<CR>
-nnoremap <Leader>s :OpenSession!<CR>
+nnoremap <Leader>o :OpenSession!<CR>

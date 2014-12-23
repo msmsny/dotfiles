@@ -71,11 +71,15 @@ let mapleader = "\<C-i>"
 " 検索ハイライトを元に戻す
 nnoremap <silent> <ESC><ESC> :nohlsearch<CR><Esc>
 
-" 検索時にジャンプリストに履歴を残さない
+" カーソル移動でジャンプリストに履歴を残さない
 nnoremap ? :keepj /
 nnoremap n :<C-u>execute 'keepjumps normal! ' . (v:count ? v:count : '') . 'n'<CR>
 nnoremap N :<C-u>execute 'keepjumps normal! ' . (v:count ? v:count : '') . 'N'<CR>
 nnoremap <silent> G :<C-u>execute 'keepjumps normal! ' . (v:count ? v:count : '') . 'G'<CR>
+nnoremap <silent> % :<C-u>execute 'keepjumps normal! %'<CR>
+nnoremap <silent> H :<C-u>execute 'keepjumps normal! H'<CR>
+nnoremap <silent> M :<C-u>execute 'keepjumps normal! M'<CR>
+nnoremap <silent> L :<C-u>execute 'keepjumps normal! L'<CR>
 
 "# バッファ移動
 nnoremap <silent> <M-Left>  :bp<CR>

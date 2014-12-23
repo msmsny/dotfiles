@@ -18,6 +18,12 @@ nnoremap <silent> <Leader>b        :Unite buffer<CR>
 nnoremap <silent> <Leader><C-b>    :UniteWithBufferDir -buffer-name=file file<CR>
 "" レジスタ一覧
 nnoremap <silent> <Leader>r        :Unite -buffer-name=register register<CR>
+"" ジャンプリスト
+nnoremap <silent> <Leader><C-j>    :Unite jump<CR>
+"" phpcomplete/files
+nnoremap <silent> <Leader><C-p>    :Unite phpcomplete/files<CR>
+"" symfony/services
+nnoremap <silent> <Leader>s        :Unite symfony/services<CR>
 " <ESC><ESC> or <C-c>でunite終了
 au FileType unite nnoremap <silent> <buffer> <ESC><ESC> :q<CR>
 au FileType unite nnoremap <silent> <buffer> <C-c>      :q<CR>
@@ -49,6 +55,8 @@ let g:unite_source_menu_menus = {
 \     ["symfony/entities"          , "Unite symfony/entities"],
 \     ["symfony/routes_by_name"    , "Unite symfony/routes_by_name"],
 \     ["symfony/routes_by_pattern" , "Unite symfony/routes_by_pattern"],
+\     ["jump"                      , "Unite jump"],
+\     ["source"                    , "Unite source"],
 \     ["file_mru"                  , "Unite file_mru"],
 \     ["file"                      , "Unite -buffer-name=file file"],
 \     ["buffer"                    , "Unite buffer"],
