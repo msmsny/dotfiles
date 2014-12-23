@@ -1,3 +1,19 @@
+snippet class
+options head
+alias c
+    /**
+     * Created by PhpStorm.
+     * Date: `strftime("%Y/%m/%d")`
+     * Time: `strftime("%H:%M")`
+     */
+
+    namespace `substitute(substitute(expand('%:p:h'), '.\+src/', '', ''), '/', '\\', 'g')`;
+
+    class ${1}
+    {
+        ${0:TARGET}
+    }
+
 snippet php_
 abbr [user] php
     <?php

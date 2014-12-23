@@ -13,8 +13,11 @@ endif
 
 " ユーザ定義snippet
 if !exists("g:neosnippet#snippets_directory")
-    let g:neosnippet#snippets_directory=""
+    let g:neosnippet#snippets_directory="~/.vim/snip/"
 endif
-if isdirectory(expand("~/.vim/bundle/neocomplcache/snippets"))
-  let g:neosnippet#snippets_directory="~/.vim/bundle/neocomplcache/snippets"
-endif
+" デフォルトsnippetは使わない
+"if isdirectory(expand("~/.vim/bundle/neosnippet-snippets/neosnippets/"))
+"  let g:neosnippet#snippets_directory="~/.vim/bundle/neosnippet-snippets/neosnippets/"
+"endif
+" デフォルトsnippetを無効
+let g:neosnippet#disable_runtime_snippets = {'php': 1}
