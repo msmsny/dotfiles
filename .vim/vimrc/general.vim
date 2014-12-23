@@ -25,12 +25,6 @@ set nobackup
 set directory=$HOME/.vim/backup
 "# ignore bell
 set visualbell t_vb=
-"# map
-" カーソル位置移動, mapleaderの前に定義しておく
-nnoremap <silent> <S-Up>   <C-o>
-nnoremap <silent> <S-Down> <C-i>
-"# <Leader>
-let mapleader = "\<C-i>"
 
 "ファイル保存ダイアログの初期ディレクトリをバッファファイル位置に設定
 set browsedir=buffer 
@@ -66,6 +60,23 @@ nnoremap <Leader><C-r> :execute "source " expand("%:p")<CR>
 "# path
 let $PATH = "/usr/local/bin:" . $PATH
 
-"# tags
-nnoremap <silent> <S-Left>  :bp<CR>
-nnoremap <silent> <S-Right> :bn<CR>
+"# map
+" ジャンプリストのカーソル位置移動, mapleaderの前に定義しておく
+nnoremap <silent> <S-Left>  <C-o>
+nnoremap <silent> <S-Right> <C-i>
+
+" <Leader>
+let mapleader = "\<C-i>"
+
+" 検索ハイライトを元に戻す
+nnoremap <silent> <ESC><ESC> :nohlsearch<CR><Esc>
+
+"# バッファ移動
+nnoremap <silent> <M-Left>  :bp<CR>
+nnoremap <silent> <M-Right> :bn<CR>
+
+"# ウィンドウ移動
+nnoremap <silent> <C-S-Up>    <C-W>k
+nnoremap <silent> <C-S-Down>  <C-W>j
+nnoremap <silent> <C-S-Left>  <C-W>h
+nnoremap <silent> <C-S-Right> <C-W>l
