@@ -4,6 +4,9 @@
 " composerコマンド
 let g:phpcomplete_index_composer_command = "/usr/local/bin/composer"
 
+" デフォルトマッピングは無効にする(<Leader><Leader>uがUniteのmapに影響するため)
+let g:phpcomplete_extended_use_default_mapping = 0
+
 " neocomplecache連携
 autocmd FileType php setlocal omnifunc=phpcomplete_extended#CompletePHP
 
