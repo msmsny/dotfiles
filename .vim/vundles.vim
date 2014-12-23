@@ -10,6 +10,7 @@ Bundle 'gmarik/vundle'
 "original repos on github
 Bundle 'Shougo/neocomplcache'
 Bundle 'Shougo/neosnippet'
+Bundle 'Shougo/neosnippet-snippets'
 Bundle 'Shougo/vimproc'
 Bundle 'Shougo/unite.vim'
 Bundle 'tomasr/molokai'
