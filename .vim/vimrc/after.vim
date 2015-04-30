@@ -13,5 +13,10 @@ autocmd FileType html set indentexpr&
 "## h    : hlsearchのハイライトが再現されない
 set viminfo='100,<100000,s100000,h
 
-" formatoptionsはgeneral.vimで定義すると正しく反映されないのでここで設定
-autocmd FileType * setlocal formatoptions-=ro
+"# formatoptionsはgeneral.vimで定義すると正しく反映されないのでここで設定
+"## formatoptions
+"   http://vimwiki.net/?%27formatoptions%27
+"## 折り返しだけしなければいいので"t"指定(filetype=phpのときは自動で削除される)
+"   http://vim-jp.org/vimdoc-ja/indent.html#php-indent
+"## "r"はdocblockを書くときにわりと便利なので無効にしない
+autocmd FileType * setlocal formatoptions-=t
