@@ -9,6 +9,8 @@ set cpo&vim
 let s:outputter = {
 \   'config': {
 \     'messages': [],
+\     'close_buffer': 0,
+\     'clear_quickfix': 0,
 \   },
 \ }
 
@@ -61,7 +63,32 @@ function! s:outputter.finish(session)
       " output/finish
       call outputter.output(self._result, a:session)
       call outputter.finish(a:session)
+
+    " 成功のとき
+    else
+      " バッファがあれば閉じる
+      if self.config.close_buffer
+        for w in range(1, winnr('$'))
+          let bt = getwinvar(w, '&buftype')
+          if bt == 'nofile'
+            execute w . 'wincmd w'
+            q
+            break
+          endif
+        endfor
+      endif
     endif
+
+    " outputterがquickfixでなければハイライトをクリアする(成功/失敗に関わらず)
+    if self.config.clear_quickfix
+      \ && s:outputter_by_message != 'quickfix'
+      for messageDict in self.config.messages
+        if has_key(messageDict, 'outputter')
+          \ && messageDict['outputter'] == 'quickfix'
+          cgetexpr ''
+          break
+        endif
+      endfor
   endif
 endfunction
 
