@@ -5,7 +5,7 @@
 let b:phpgetset_getterTemplate =
 \ "\n" .
 \ "    /**\n" .
-\ "     * Gets %varname%\n" .
+\ "     * Gets a %varname%\n" .
 \ "     *\n" .
 \ "     * @return %type%\n" .
 \ "     */\n" .
@@ -18,7 +18,7 @@ let b:phpgetset_getterTemplate =
 let b:phpgetset_setterTemplate =
 \ "\n" .
 \ "    /**\n" .
-\ "     * Sets %varname%\n" .
+\ "     * Sets a %varname%\n" .
 \ "     *\n" .
 \ "     * @param %type%\n" .
 \ "     */\n" .
