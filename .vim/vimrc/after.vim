@@ -12,3 +12,6 @@ autocmd FileType html set indentexpr&
 "## s10  : viminfoファイルの上限サイズ(KB)
 "## h    : hlsearchのハイライトが再現されない
 set viminfo='100,<100000,s100000,h
+
+" formatoptionsはgeneral.vimで定義すると正しく反映されないのでここで設定
+autocmd FileType * setlocal formatoptions-=ro

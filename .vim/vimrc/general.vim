@@ -6,7 +6,7 @@ augroup autocmd_vimrc
   autocmd!
 augroup END
 autocmd autocmd_vimrc FileType * set textwidth=0
-autocmd autocmd_vimrc FileType * set formatoptions-=ro
+" formatoptionsの設定はここでやると正しく反映されないのでafter.vimに移動した
 autocmd autocmd_vimrc BufWritePost .vimrc,*.vim nested source $HOME/.vimrc
 
 set backspace=2
