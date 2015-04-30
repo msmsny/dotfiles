@@ -23,7 +23,7 @@
 "       前述のように結果コードだけでは判断できないので出力文字列ですべてOKかどうかを判定する
 " ========================================
 let g:quickrun_config = {
-\  'watchdogs_checker/_': {
+\  '_': {
 \    'runner'                   : 'vimproc',
 \    'runner/vimproc/sleep'     : 1,
 \    'runner/vimproc/updatetime': 10,
@@ -33,6 +33,7 @@ let g:quickrun_config = {
 let s:path_php = '/usr/bin/php'
 let s:path_php_cs_fixer = expand('~/work/php-cs-fixer')
 if executable(s:path_php) && executable(s:path_php_cs_fixer)
+  " watchdogs
   let g:quickrun_config['watchdogs_checker/php'] = {
 \   'command'                                 : s:path_php,
 \   'exec'                                    : ['%c -l %s:p', '%c '.s:path_php_cs_fixer.' fix --dry-run --diff %s:p'],
@@ -50,6 +51,15 @@ if executable(s:path_php) && executable(s:path_php_cs_fixer)
 \   'hook/qfsigns_update/enable_exit'         : 1,
 \   'hook/qfsigns_update/priority_exit'       : 3,
 \ }
+
+  " quickrun
+  let g:quickrun_config['php'] = {'type': 'php-cs-fixer'}
+  let g:quickrun_config['php-cs-fixer'] = {
+\   'command'  : s:path_php,
+\   'exec'     : '%c '.s:path_php_cs_fixer.' fix %s:%p',
+\   'outputter': 'null',
+\   'hook/reload/enabled': 1,
+\ }
 endif
 
 let g:watchdogs_check_BufWritePost_enables = {
@@ -57,3 +67,6 @@ let g:watchdogs_check_BufWritePost_enables = {
 \}
 
 call watchdogs#setup(g:quickrun_config)
+
+" map
+cnoremap <silent> fix<CR> :QuickRun php<CR>
