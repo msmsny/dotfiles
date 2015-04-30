@@ -35,6 +35,7 @@ Bundle 'osyo-manga/vim-textobj-multitextobj'
 Bundle 'mattn/vim-textobj-url'
 Bundle 'kana/vim-operator-user'
 Bundle 'kana/vim-operator-replace'
+Bundle 'sudo.vim'
 if executable('php')
   Bundle 'm2mdas/phpcomplete-extended'
   Bundle 'm2mdas/phpcomplete-extended-symfony'
