@@ -24,6 +24,9 @@ function! s:outputter.finish(session)
     \ || stridx(s:lines[1], 'Fixed all files') != 0
 
     let outputter = a:session.make_module('outputter', self.config.target)
+    " バッファを初期化しておく(outputter.start()は初回のみ実行なので)
+    call outputter.start(a:session)
+    " output/finish
     call outputter.output(self._result, a:session)
     call outputter.finish(a:session)
   endif
