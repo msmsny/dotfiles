@@ -28,7 +28,7 @@ function! s:Cache_Quickfix()
 endfunction
  
 function! s:Show_Quickfix_In_Status()
-    if !exists("b:qfstatus_list")
+    if get(b:, 'qfstatus_list', {}) == {}
         return
     endif
     let ln = line('.')
