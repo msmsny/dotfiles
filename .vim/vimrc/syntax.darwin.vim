@@ -45,6 +45,13 @@ hi PmenuSel ctermbg=8 ctermfg=Green guibg=#606060
 hi PmenuSbar ctermbg=0 guibg=#d6d6d6
 "## easymotion
 hi EasyMotionTarget cterm=bold ctermfg=46 ctermbg=NONE
+"## バッファ上でphp-cs-fixerの結果を表示
+hi diffAdded ctermfg=46
+"### "+++ New"
+hi diffFile ctermfg=46
+hi diffRemoved ctermfg=196
+"### "--- Original"
+hi diffNewFile ctermfg=196
 
 " ステータスライン
 "hi StatusLine gui=NONE guifg=Black guibg=Green cterm=NONE ctermfg=Black ctermbg=Blue    " アクティブなステータスライン
