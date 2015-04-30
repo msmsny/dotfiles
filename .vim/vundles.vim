@@ -40,6 +40,7 @@ Bundle "osyo-manga/vim-watchdogs"
 Bundle "osyo-manga/shabadou.vim"
 Bundle 'cohama/vim-hier'
 Bundle 'KazuakiM/vim-qfsigns'
+Bundle 'dannyob/quickfixstatus'
 if executable('php')
   Bundle 'm2mdas/phpcomplete-extended'
   Bundle 'm2mdas/phpcomplete-extended-symfony'
