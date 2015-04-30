@@ -6,4 +6,4 @@ let g:php_cs_fixer_path = "~/git/PHP-CS-Fixer/php-cs-fixer"
 let g:php_cs_fixer_php_path = "/usr/bin/php"
 
 " map
-cnoremap <silent> wp<CR> :w<CR>:call PhpCsFixerFixFile()<CR>
+cnoremap <silent> fix<CR> :silent call PhpCsFixerFixFile()<CR>:silent e!<CR>
