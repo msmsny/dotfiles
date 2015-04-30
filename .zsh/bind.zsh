@@ -7,6 +7,8 @@ bindkey '^s' history-incremental-pattern-search-forward
 # 単語移動
 bindkey '^f' forward-word
 bindkey '^b' backward-word
+# カーソルの前削除
+bindkey '^u' backward-kill-line
 # C-wで単語削除
 WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
 # C-qでスペースの前まで削除
@@ -17,4 +19,4 @@ function _kill-backward-blank-word() {
   zle kill-region
 }
 zle -N _kill-backward-blank-word
-bindkey '^q' _kill-backward-blank-word
+bindkey '^q' kill-backward-blank-word
