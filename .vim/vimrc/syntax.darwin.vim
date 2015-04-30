@@ -52,6 +52,8 @@ hi diffFile ctermfg=46
 hi diffRemoved ctermfg=196
 "### "--- Original"
 hi diffNewFile ctermfg=196
+"## colorcolumn
+hi ColorColumn term=reverse ctermfg=161 ctermbg=232 guibg=#3B3A32
 
 " ステータスライン
 "hi StatusLine gui=NONE guifg=Black guibg=Green cterm=NONE ctermfg=Black ctermbg=Blue    " アクティブなステータスライン

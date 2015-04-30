@@ -7,6 +7,10 @@ augroup autocmd_vimrc
 augroup END
 autocmd autocmd_vimrc FileType * set textwidth=0
 " formatoptionsの設定はここでやると正しく反映されないのでafter.vimに移動した
+if exists('&colorcolumn')
+  autocmd autocmd_vimrc FileType php execute 'set colorcolumn='.join(range(120 + 1, 120 + 100), ',')
+  autocmd autocmd_vimrc FileType php setlocal textwidth=120
+endif
 autocmd autocmd_vimrc BufWritePost .vimrc,*.vim nested source $HOME/.vimrc
 
 set backspace=2
