@@ -55,6 +55,7 @@ if(php_sapi_name() == 'cli') {
         }
 
         $index  = $phpCompletePsr->generateIndex();
+        $phpCompletePsr->generateClassesIndex($index)->unsetClassesIndex($index);
 
         $jsonIndex = json_encode($index);
         $lastJsonError = json_last_error();
@@ -534,6 +535,42 @@ class IndexGenerator
         $this->execHook("postCreateIndex", false, $out, $this);
         $this->writePluginIndexes();
         return $out;
+    }
+
+    // divide "classes/{fqcn}" index to another cache files
+    public function generateClassesIndex($index)
+    {
+        if (isset($index['classes']) && is_array($index['classes'])) {
+            $dirName = '.phpcomplete_extended/classes';
+            // initialize directory
+            if (is_dir($dirName)) {
+                foreach (glob("{$dirName}/*.json" as $fileName) {
+                    unlink($fileName);
+                }
+            } else {
+                mkdir($dirName, 0755, true);
+            }
+        }
+
+        // create cache files
+        foreach ($index['classes'] as $className => $data) {
+            $fileName = str_replace('\\', '_', $className).'.json';
+            file_put_contents("{$dirName}/{$fileName}", json_encode($data));
+        }
+
+        return $this;
+    }
+
+    // remove "classes/{fqcn}" (replace "1")
+    public function unsetClassesIndex(&$index)
+    {
+        if (isset($index['classes']) && is_array($index['classes'])) {
+            foreach ($index['classes'] as $className => $data) {
+                $index['classes'][$className] = 1;
+            }
+        }
+
+        return $this;
     }
 
     private function createMenuEntries($class_fqcn, $functions)

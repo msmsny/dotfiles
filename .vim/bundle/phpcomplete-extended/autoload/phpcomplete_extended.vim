@@ -776,11 +776,14 @@ function! s:getJumpDataOfCurrentWord(type) "{{{
 
         let method_property_key = lastToken['isMethod']? 'methods' : 'properties'
         if has_key(g:phpcomplete_index['classes'], fqcn)
-            \ && has_key(g:phpcomplete_index['classes'][fqcn][method_property_key]['all'], methodPropertyText)
+            let fqcn_data_from_cache = phpcomplete_extended#getClassData(fqcn)
+            if has_key(fqcn_data_from_cache[method_property_key]['all'], methodPropertyText)
+                let fqcn_data = fqcn_data_from_cache[method_property_key]['all'][methodPropertyText]
+            endif
+        endif
 
-            let fqcn_data = g:phpcomplete_index['classes'][fqcn][method_property_key]['all'][methodPropertyText]
-
-        elseif has_key(g:phpcomplete_extended_core_index['classes'], fqcn)
+        if fqcn_data != {}
+            \ && has_key(g:phpcomplete_extended_core_index['classes'], fqcn)
             \ && has_key(g:phpcomplete_extended_core_index['classes'][fqcn][method_property_key]['all'], methodPropertyText)
 
             let fqcn_data = g:phpcomplete_extended_core_index['classes'][fqcn][method_property_key]['all'][methodPropertyText]
@@ -1141,7 +1144,17 @@ function! phpcomplete_extended#getClassData(fqcn) " {{{
     else
 
         if has_key(g:phpcomplete_index['classes'], fqcn)
-            let data = g:phpcomplete_index['classes'][fqcn]
+            " every time load from small cache
+            let fileName = '.phpcomplete_extended/classes/' . substitute(fqcn, "\\", "_", "g") . ".json"
+            if (!filereadable(fileName))
+                return empty_dict
+            endif
+            let file_content = readfile(fileName)
+            let true = 1
+            let false = 0
+            let null = 0
+            sandbox let eval_data = eval(file_content[0])
+            let data = eval_data
         elseif has_key(g:phpcomplete_extended_core_index['classes'], fqcn)
             let data = g:phpcomplete_extended_core_index['classes'][fqcn]
         else
