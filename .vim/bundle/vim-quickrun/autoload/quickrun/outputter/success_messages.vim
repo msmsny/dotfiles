@@ -19,7 +19,7 @@ function! s:outputter.init(session)
 endfunction
 
 function! s:outputter.output(data, session)
-  let self._result .= a.data
+  let self._result .= a:data
 endfunction
 
 function! s:outputter.finish(session)
@@ -89,6 +89,7 @@ function! s:outputter.finish(session)
           break
         endif
       endfor
+    endif
   endif
 endfunction
 
