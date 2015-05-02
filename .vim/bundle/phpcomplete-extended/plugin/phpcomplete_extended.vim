@@ -36,6 +36,8 @@ if !executable("php")
     echoerr "php executable not found. Put the directory containing php executable in your $PATH environment variable"
 endif
 
+let g:phpcomplete_extended_php_command = get(g:, 'phpcomplete_extended_php_command', 'php')
+
 let g:phpcomplete_index_composer_command =
       \ get(g:, 'phpcomplete_index_composer_command', 'php composer.phar')
 

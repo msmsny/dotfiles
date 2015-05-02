@@ -1442,7 +1442,7 @@ function! phpcomplete_extended#generateIndex(...) "{{{
 
     let plugin_php_file_command = join(map(copy(s:plugin_php_files), '" -u ".v:val'))
 
-    let cmd = 'php ' . input . plugin_php_file_command
+    let cmd = g:phpcomplete_extended_php_command . ' ' . input . plugin_php_file_command
     "echoerr cmd
     "return
 
@@ -1475,7 +1475,7 @@ function! phpcomplete_extended#updateIndex(background) "{{{
     let plugin_php_file_command = join(map(copy(s:plugin_php_files), '" -u ".v:val'))
     let input = printf('%s %s %s %s', g:phpcomplete_extended_root_dir . "/bin/IndexGenerator.php update" , file_location,  fileName, plugin_php_file_command)
     let input = phpcomplete_extended#util#substitute_path_separator(input)
-    let cmd = 'php '. input
+    let cmd = g:phpcomplete_extended_php_command . ' '. input
 
     if a:background
         let cmd .= ' 1>/dev/null 2>/dev/null'

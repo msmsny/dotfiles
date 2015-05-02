@@ -1,6 +1,8 @@
 " ========================================
 " " phpcomplete-extended.vim
 " ========================================
+" phpコマンド
+let g:phpcomplete_extended_php_command = "/usr/bin/php"
 " composerコマンド
 let g:phpcomplete_index_composer_command = "/usr/local/bin/composer"
 
