@@ -41,6 +41,7 @@ Bundle "osyo-manga/shabadou.vim"
 Bundle 'cohama/vim-hier'
 Bundle 'KazuakiM/vim-qfsigns'
 Bundle 'dannyob/quickfixstatus'
+Bundle 'tpope/vim-fugitive'
 if executable('php')
   Bundle 'm2mdas/phpcomplete-extended'
   Bundle 'm2mdas/phpcomplete-extended-symfony'
