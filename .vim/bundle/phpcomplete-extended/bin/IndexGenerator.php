@@ -904,7 +904,15 @@ class IndexGenerator
             $returnType  = "";
             $arrayReturn = 0;
             $returnTypes = explode('|', trim($parsedComment['return']));
+            // ignore empty string to avoid php error
+            if ($rType === '') {
+                continue;
+            }
             foreach ($returnTypes as $rType) {
+                // ignore empty string to avoid php error
+                if ($rType === '') {
+                    continue;
+                }
                 if(preg_match('/\[\]$/', $rType)) {
                     $arrayReturn = 1;
                     $rType = trim($rType, "[]");
