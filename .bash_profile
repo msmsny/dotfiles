@@ -21,6 +21,9 @@ export TERM
 ## tmux
 _TMUX=/usr/local/bin/tmux
 
+# output stop disabled for i-search
+stty stop undef
+
 # run zsh if exists
 ZSH=/bin/zsh
 if [ -x "$ZSH" ]; then
@@ -32,7 +35,4 @@ else
 
   export BASH_ENV=$HOME/.bashrc
   export PAGER=/usr/bin/less
-
-  # output stop disabled for i-search
-  stty stop undef
 fi
