@@ -820,7 +820,7 @@ class IndexGenerator
         if($reflectionClass->isInternal()) { 
             $fqcn = $reflectionClass->getName();
             if(array_key_exists($fqcn, $this->coreIndex['classes'])) {
-                return $this->coreIndex['classes'][$reflectionClass->getName()];
+                return $this->getCoreClassIndex($reflectionClass->getName());
             } else {
                 return $classData;
             }
@@ -1714,6 +1714,88 @@ class IndexGenerator
     public function processCoreIndexFile()
     {
         $this->coreIndex = json_decode(file_get_contents($this->coreIndexFile), true);
+
+        // segmentalize core_index
+        $this->generateCoreClassesIndex()->unsetCoreClassesIndex();
+    }
+
+    // segmentalize core_index under classes/{className} to another small caches
+    protected function generateCoreClassesIndex()
+    {
+        if ($this->isValidCoreIndex() && !$this->hasInitializedCoreIndex()) {
+            $dirName = '.phpcomplete_extended/core/classes';
+            // initialize directory
+            if (is_dir($dirName)) {
+                foreach (glob("{$dirName}/*.json") as $fileName) {
+                    unlink($fileName);
+                }
+            } else {
+                mkdir($dirName, 0755, true);
+            }
+
+            // create small caches
+            foreach ($this->coreIndex['classes'] as $className => $data) {
+                $fileName = str_replace('\\', '_', $className).'.json';
+                file_put_contents("{$dirName}/{$fileName}", json_encode($data));
+            }
+        }
+
+        return $this;
+    }
+
+    // remove core_index under classes/{className} (equals replacing "1")
+    protected function unsetCoreClassesIndex()
+    {
+        if ($this->isValidCoreIndex() && !$this->hasInitializedCoreIndex()) {
+            foreach ($this->coreIndex['classes'] as $className => $data) {
+                $this->coreIndex['classes'][$className] = 1;
+            }
+        }
+
+        file_put_contents($this->getCoreIndexFile(), json_encode($this->coreIndex));
+
+        return $this;
+    }
+
+    // whether initializes core_index or not
+    protected function hasInitializedCoreIndex()
+    {
+        if ($this->isValidCoreIndex()) {
+            foreach ($this->coreIndex['classes'] as $dataOrOne) {
+                // check only head column
+                if ($dataOrOne !== 1) {
+                    return false;
+                }
+                break;
+            }
+
+        // return false if core_index is invalid. Nothing happend, as checking on generateCoreClassesIndex().
+        } else {
+            return false;
+        }
+
+        return true;
+    }
+
+    // load segmentalized core_index(one file by one class)
+    protected function getCoreClassIndex($className)
+    {
+        static $cache = array();
+        $key = sha1($className);
+        if (isset($cache[$key])) {
+            return $cache[$key];
+        }
+
+        $dirName  = '.phpcomplete_extended/core/classes';
+        $fileName = str_replace('\\', '_', $className).'.json';
+        $path     = "{$dirName}/{$fileName}";
+        if (is_file($path)) {
+            $cache[$key] = json_decode(file_get_contents($path), true);
+
+            return $cache[$key];
+        }
+
+        return array();
     }
 }
 

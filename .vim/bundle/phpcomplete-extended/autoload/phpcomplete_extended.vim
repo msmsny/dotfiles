@@ -761,7 +761,7 @@ function! s:getJumpDataOfCurrentWord(type) "{{{
         if has_key(g:phpcomplete_extended_core_index['functions'], cur_word)
             let fqcn_data = g:phpcomplete_extended_core_index['functions'][cur_word]
         elseif has_key(g:phpcomplete_extended_core_index['classes'], cur_word)
-            let fqcn_data = g:phpcomplete_extended_core_index['classes'][cur_word]
+            let fqcn_data = phpcomplete_extended#getClassData(cur_word)
         endif
 
         if static_or_ref
@@ -784,9 +784,10 @@ function! s:getJumpDataOfCurrentWord(type) "{{{
 
         if fqcn_data != {}
             \ && has_key(g:phpcomplete_extended_core_index['classes'], fqcn)
-            \ && has_key(g:phpcomplete_extended_core_index['classes'][fqcn][method_property_key]['all'], methodPropertyText)
-
-            let fqcn_data = g:phpcomplete_extended_core_index['classes'][fqcn][method_property_key]['all'][methodPropertyText]
+            let fqcn_data_from_cache = phpcomplete_extended#getClassData(fqcn)
+            if has_key(fqcn_data_from_cache[method_property_key]['all'], methodPropertyText)
+                let fqcn_data = fqcn_data_from_cache[method_property_key]['all'][methodPropertyText]
+            endif
         endif
 
     elseif has_key(lastToken, 'isNew')
@@ -1156,7 +1157,17 @@ function! phpcomplete_extended#getClassData(fqcn) " {{{
             sandbox let eval_data = eval(file_content[0])
             let data = eval_data
         elseif has_key(g:phpcomplete_extended_core_index['classes'], fqcn)
-            let data = g:phpcomplete_extended_core_index['classes'][fqcn]
+            " every time load from small cache
+            let fileName = '.phpcomplete_extended/core/classes/' . substitute(fqcn, "\\", "_", "g") . ".json"
+            if (!filereadable(fileName))
+                return empty_dict
+            endif
+            let file_content = readfile(fileName)
+            let true = 1
+            let false = 0
+            let null = 0
+            sandbox let eval_data = eval(file_content[0])
+            let data = eval_data
         else
             return empty_dict
         endif
