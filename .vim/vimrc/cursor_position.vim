@@ -1,7 +1,7 @@
 "----------------------------
 " カーソル位置の記憶(@see /usr/share/vim/vim73/vimrc_example.vim)
 "----------------------------
-let g:cursor_position_exclude = '(svn|git)-commit.*'
+let g:cursor_position_exclude = '\(svn-commit.*\|COMMIT_EDITMSG\)'
 
 " Only do this part when compiled with support for autocommands.
 if has("autocmd")
