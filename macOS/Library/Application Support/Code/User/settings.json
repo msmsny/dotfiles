@@ -1,0 +1,53 @@
+// 既定の設定を上書きするには、このファイル内に設定を挿入します
+{
+    "workbench.colorTheme": "Monokai",
+    "workbench.startupEditor": "welcomePage",
+    // シングルクリックのプレビューモード抑止(タブ上書き回避)
+    "workbench.editor.enablePreview": false,
+    // タブサイズが短くなっても全部表示
+    "workbench.editor.tabSizing": "shrink",
+    "workbench.iconTheme": "material-icon-theme",
+    "terminal.integrated.fontFamily": "Ricty",
+    "breadcrumbs.enabled": true,
+    "files.insertFinalNewline": true,
+    "vim.insertModeKeyBindings": [
+        {
+            "before": ["<F12>"],
+            "after": ["<C-]>"]
+        }
+    ],
+    "vim.normalModeKeyBindings": [
+        {
+            "before": ["s"],
+            "after": ["<Leader>", "<Leader>", "2", "s"]
+        }
+    ],
+    "vim.whichwrap": "b,s,h,l,<,>,[,]",
+    "vim.easymotion": true,
+    "vim.easymotionMarkerFontFamily": "Ricty",
+    "vim.easymotionMarkerForegroundColorTwoChar": "#f92672",
+    "vim.easymotionMarkerBackgroundColor": "#3e3d32",
+    "vim.easymotionMarkerForegroundColorOneChar": "#f92672",
+    "vim.easymotionMarkerFontWeight": "bold",
+    //"go.toolsGopath": "/Users/msmsny/.vscode/go",
+    "gitlens.statusBar.enabled": false,
+    "gitlens.currentLine.enabled": false,
+    "gitlens.codeLens.authors.enabled": false,
+    "gitlens.codeLens.recentChange.enabled": false,
+    "trailing-spaces.highlightCurrentLine": false,
+    "trailing-spaces.regexp": "[ 　\t]+",
+    "trailing-spaces.trimOnSave": true,
+    "editor.parameterHints.enabled": false,
+    "powermode.enabled": true,
+    "powermode.enableShake": false,
+    "powermode.enableStatusBarComboCounter": false,
+    "powermode.enableStatusBarComboTimer": false,
+    "powermode.presets": "exploding-rift",
+    "cSpell.ignoreRegExpList": [
+        "[０-９Ａ-Ｚａ-ｚぁ-んァ-ヶ亜-熙纊-黑]+",
+        "github.com/.+"
+    ],
+    "php.validate.executablePath": "/Users/msmsny/.phpenv/versions/7.1.8/bin/php",
+    "php.executablePath": "/Users/msmsny/.phpenv/versions/7.1.8/bin/php",
+    "php.suggest.basic": false,
+}

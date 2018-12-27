@@ -1,0 +1,93 @@
+// Place your key bindings in this file to overwrite the defaults
+[
+    {
+        "key": "tab",
+        "command": "-acceptSelectedSuggestion",
+        "when": "suggestWidgetVisible && textInputFocus"
+    },
+    {
+        "key": "tab",
+        "command": "selectNextSuggestion",
+        "when": "editorTextFocus && suggestWidgetMultipleSuggestions && suggestWidgetVisible"
+    },
+    {
+        "key": "shift+tab",
+        "command": "selectPrevSuggestion",
+        "when": "editorTextFocus && suggestWidgetMultipleSuggestions && suggestWidgetVisible"
+    },
+    {
+        "key": "ctrl+left",
+        "command": "workbench.action.previousEditor"
+    },
+    {
+        "key": "ctrl+right",
+        "command": "workbench.action.nextEditor"
+    },
+    {
+        "key": "cmd+f",
+        "command": "workbench.view.search",
+        "when": "!searchViewletVisible"
+    },
+    {
+        "key": "cmd+f",
+        "command": "-actions.find"
+    },
+    {
+        "key": "cmd+e",
+        "command": "workbench.view.explorer"
+    },
+    {
+        "key": "cmd+e",
+        "command": "-actions.findWithSelection"
+    },
+    {
+        "key": "ctrl+[",
+        "command": "workbench.action.navigateBack"
+    },
+    {
+        "key": "ctrl+shift+]",
+        "command": "editor.action.referenceSearch.trigger",
+        "when": "editorHasReferenceProvider && editorTextFocus && !inReferenceSearchEditor && !isInEmbeddedEditor"
+    },
+    {
+        "key": "cmd+left",
+        "command": "workbench.action.navigateLeft"
+    },
+    {
+        "key": "cmd+right",
+        "command": "workbench.action.navigateRight"
+    },
+    {
+        "key": "cmd+down",
+        "command": "workbench.action.navigateDown"
+    },
+    {
+        "key": "cmd+up",
+        "command": "workbench.action.navigateUp"
+    },
+    // エクスプローラー上でキーボードだけでファイルを開く
+    // 現状だとエクスプローラー上では"横に並べて開く"(ctrl + Enter)しかない
+    // 対処としては横に並べて開いた後に同じコマンド(ctrl + Enter)で"エディターを前のグループに移動"して普通に開いているように見せる
+    {
+        "key": "ctrl+enter",
+        "command": "workbench.action.moveEditorToPreviousGroup",
+        "when": "editorTextFocus"
+    },
+    // マウスオーバー時のパネルをキーボード入力で表示させる
+    {
+        "key": "shift+/",
+        "command": "editor.action.showHover",
+        "when": "editorTextFocus && vim.mode == 'Normal'"
+    },
+    // 関数定義などのヒント表示
+    {
+        "key": "ctrl+h",
+        "command": "editor.action.triggerParameterHints",
+        "when": "editorHasSignatureHelpProvider && editorTextFocus"
+    },
+    {
+        "key": "ctrl+h",
+        "command": "closeParameterHints",
+        "when": "editorTextFocus && parameterHintsVisible"
+    }
+]
