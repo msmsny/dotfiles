@@ -7,6 +7,9 @@
     // タブサイズが短くなっても全部表示
     "workbench.editor.tabSizing": "shrink",
     "workbench.iconTheme": "material-icon-theme",
+    "material-icon-theme.files.associations": {
+        "*.go": "Go_gopher",
+    },
     "terminal.integrated.fontFamily": "Ricty",
     "breadcrumbs.enabled": true,
     "files.insertFinalNewline": true,
@@ -17,6 +20,10 @@
         }
     ],
     "vim.normalModeKeyBindings": [
+        {
+            "before": ["<F12>"],
+            "after": ["<C-]>"]
+        },
         {
             "before": ["s"],
             "after": ["<Leader>", "<Leader>", "2", "s"]
@@ -29,7 +36,12 @@
     "vim.easymotionMarkerBackgroundColor": "#3e3d32",
     "vim.easymotionMarkerForegroundColorOneChar": "#f92672",
     "vim.easymotionMarkerFontWeight": "bold",
-    //"go.toolsGopath": "/Users/msmsny/.vscode/go",
+    // TODO goenv
+    //"go.goroot": "/Users/msmsny/.goenv/versions/1.12.9",
+    "go.formatTool": "goimports",
+    "go.toolsEnvVars": {"GO111MODULE": "off"},
+    "go.autocompleteUnimportedPackages": true,
+    "go.useLanguageServer": false,
     "gitlens.statusBar.enabled": false,
     "gitlens.currentLine.enabled": false,
     "gitlens.codeLens.authors.enabled": false,
@@ -37,8 +49,9 @@
     "trailing-spaces.highlightCurrentLine": false,
     "trailing-spaces.regexp": "[ 　\t]+",
     "trailing-spaces.trimOnSave": true,
+    "trailing-spaces.syntaxIgnore": ["markdown"],
     "editor.parameterHints.enabled": false,
-    "powermode.enabled": true,
+    "powermode.enabled": false,
     "powermode.enableShake": false,
     "powermode.enableStatusBarComboCounter": false,
     "powermode.enableStatusBarComboTimer": false,
