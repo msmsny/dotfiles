@@ -12,6 +12,8 @@
     },
     "terminal.integrated.fontFamily": "Ricty",
     "breadcrumbs.enabled": true,
+    // markdown-toc
+    "files.eol": "\n",
     "files.insertFinalNewline": true,
     "vim.insertModeKeyBindings": [
         {
@@ -56,6 +58,8 @@
     "powermode.enableStatusBarComboCounter": false,
     "powermode.enableStatusBarComboTimer": false,
     "powermode.presets": "exploding-rift",
+    "markdown-toc.updateOnSave": false,
+    "markdown-toc.depthFrom": 2,
     "cSpell.ignoreRegExpList": [
         "[０-９Ａ-Ｚａ-ｚぁ-んァ-ヶ亜-熙纊-黑]+",
         "github.com/.+"
